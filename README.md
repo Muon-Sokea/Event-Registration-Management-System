@@ -1,39 +1,63 @@
-### Planning Center — Front-end Prototype
+# 🎉 Club Center Project: Event Registration & Management System
+> *Say goodbye to paper forms. Say hello to fast, simple, and digital event management.*
 
-**Discover and manage events with a clean, responsive front-end built in HTML, CSS, and JavaScript.**  
-**"Discover Amazing Events Join thousands of attendees at conferences, workshops, and networking events"**  
-**"Workshop 4.0 Pre-Event Planning March 20, 2026 · Phnom Penh, RUPP $300"**
+## 📖 Quick Overview
+Welcome to the **Club Center Project**! This web platform replaces manual sign-ups with a smooth online system. Attendees can browse events, register in a few clicks, and get instant digital tickets. Organizers can create events, track seats in real time, and send updates automatically. All built for a stress-free campus experience.
+
+## ✨ What You Can Do
+### 👤 For Attendees (Users)
+- 🔍 **Browse Events** – See dates, venues, and open seats at a glance.
+- 📝 **Register Online** – Fill a short form and submit in seconds.
+- 🎟️ **Get Instant Tickets** – Receive a unique digital ticket (QR/ID) right away.
+- 🔔 **Stay Updated** – Auto reminders and change alerts via email or SMS.
+- 👤 **Manage Your Profile** – Update details, view past events, or cancel before deadlines.
+
+### 🛡️ For Organizers (Admins)
+- ➕ **Create & Edit Events** – Add title, description, date, venue, and seat limits.
+- 📊 **Live Tracking** – Watch registrations grow and see available seats in real time.
+- 🚫 **Smart Seat Control** – System auto-closes registration when capacity is full.
+- 📧 **Broadcast Updates** – Send announcements to all registered users instantly.
+- 📈 **Clean Dashboard** – View stats, attendee lists, and event status in one place.
+
+## 🚀 How It Works (Step-by-Step)
+1. **Sign Up** → Create a secure account with basic details.
+2. **Pick an Event** → Browse the catalog and check seat availability.
+3. **Register** → Fill required fields and confirm.
+4. **Get Ticket** → Receive your digital ticket + confirmation email/SMS.
+5. **Stay Ready** → Get reminders 48 hours before the event and updates if anything changes.
+
+## 🛠️ Built For You (Simple & Reliable)
+- 🌐 **Works Everywhere** – Chrome, Firefox, Edge, Safari on phones, tablets, or laptops.
+- 📱 **Mobile Friendly** – Clean layout that adapts to any screen size.
+- 🔒 **Safe & Secure** – Encrypted passwords, HTTPS connections, and protected admin access.
+- ⚡ **Fast & Stable** – Pages load in 2-3 seconds; handles 200+ users at once.
+- 💾 **Always Backed Up** – Automatic database backups and quick recovery if needed.
+- 📧 **Smart Alerts** – Email/SMS notifications run without manual effort.
+
+## 📅 Development Roadmap
+| Phase | What’s Included |
+|-------|----------------|
+| **Phase 1: Core** | User signup, event creation, digital tickets, secure login |
+| **Phase 2: Enhancements** | Auto notifications, profile management, admin dashboard, clear error messages |
+| **Phase 3: Future** | Better mobile tuning, attendance reports, payment/sponsor integrations |
+
+## 👨‍💻 Meet The Team
+- **University:** Royal University of Phnom Penh | Faculty of Engineering
+- **Department:** Data Science and Engineering
+- **Course:** Project Practicum
+- **Lecturer:** Toem Theara
+- **Group 02:** San Sotheayuth, Muon Sokea, Proeung Sivly, Lang Socheat
+- **Version:** `0.1` | **Draft Date:** January 10, 2026
+
+## 🔗 See The Prototype
+👉 [Open Figma Prototype](https://www.figma.com/design/UbTJfyAl3NxByIfTct2ayM/Untitled?node-id=0-1&t=rKQoRdXT9Ph5a5wb-1)
+
+## 📝 Important Notes
+- This is an **academic project** focused on registration, ticketing, and event management.
+- **Online payments and sponsor tools** are planned for future updates.
+- Requires a stable internet connection for real-time features.
+- Full technical details are in the official SRS document.
 
 ---
-
-### What this project is
-A polished, static prototype that reproduces the supplied UI design (images replaced with placeholders). It includes the main user flows you need to demo an event platform: event discovery, event cards, registration, and a simple user dashboard. The code is lightweight and easy to extend.
-
----
-
-### Key features
-- **Event discovery** — hero section, search, category filter, and a responsive grid of event cards.  
-- **Event cards** — badges for availability, title, date/location, price, attendee count, and action buttons.  
-- **Registration flow** — two-column form with personal and payment fields, client-side validation, and an order summary.  
-- **Dashboard snippets** — profile summary, totals, and upcoming events list for quick demos.  
-- **Responsive and accessible-first layout** — desktop-first with mobile breakpoints and semantic structure.  
-- **Minimal JavaScript** — search filtering, form validation, and simple UI interactions for fast iteration.
-
----
-
-### Quick start
-1. **Download** the repository and place the files in one folder.  
-2. **Files included** — `index.html`, `styles.css`, `script.js`.  
-3. **Open** `index.html` in any modern browser to preview the prototype.  
-4. **Test interactions** — use the search box, submit the registration form, and try the Cancel button.
-
----
-
-### How to customize
-- **Replace images** — swap `.placeholder` blocks with `<img src="...">` and adjust CSS height if needed.  
-- **Change branding** — edit `:root` variables in `styles.css` to update colors, radii, and fonts.  
-- **Extend forms** — connect `script.js` to your backend endpoints or a payment provider for real submissions.  
-- **Split into pages** — separate event detail, ticket, and admin views into individual HTML files for a multi-page prototype.  
-- **Improve accessibility** — add ARIA attributes, focus styles, and keyboard navigation where needed.
-
----
+💡 *Need help, want to report a bug, or have ideas? Reach out to Group 02 or check the full documentation.*  
+🌱 *Made with care for smoother, paper-free campus events.*
