@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Planning Center – System Administrator Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --orange:#F5A623;--orange-h:#e09415;
+  --text:#1a1a1a;--mid:#555;--light:#999;--border:#e5e5e5;
+  --white:#fff;--bg:#f5f6f8;
+}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* NAV */
+nav{background:var(--white);display:flex;align-items:center;justify-content:space-between;padding:12px 32px;box-shadow:0 1px 4px rgba(0,0,0,.08);position:sticky;top:0;z-index:100}
+.logo{font-family:'Dancing Script',cursive;font-size:1.7rem;line-height:1.1;color:var(--orange);cursor:pointer}
+.nav-actions{display:flex;gap:10px}
+.btn-nav{font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:700;padding:7px 20px;border-radius:6px;cursor:pointer;border:2px solid var(--orange);background:transparent;color:var(--orange);transition:all .18s;display:flex;align-items:center;gap:6px}
+.btn-nav:hover,.btn-nav.active{background:var(--orange);color:#fff}
+.btn-nav svg{width:15px;height:15px}
+
+/* PAGE */
+.page{padding:28px 32px 56px}
+.page-title{margin-bottom:22px}
+.page-title h1{font-size:1.5rem;font-weight:800;margin-bottom:4px}
+.page-title p{font-size:.88rem;color:var(--mid)}
+
+/* TABS */
+.tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.tab{font-family:'Nunito',sans-serif;font-size:.84rem;font-weight:700;padding:8px 18px;border-radius:8px;cursor:pointer;border:1.5px solid var(--border);background:var(--white);color:var(--mid);transition:all .18s;display:flex;align-items:center;gap:7px}
+.tab:hover{border-color:var(--orange);color:var(--orange)}
+.tab.active{background:var(--orange);border-color:var(--orange);color:#fff}
+.tab svg{width:15px;height:15px}
+
+/* TAB PANELS */
+.panel{display:none}.panel.active{display:block}
+
+/* ─── OVERVIEW ─── */
+.stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+.stat-card{border-radius:12px;padding:20px 22px;display:flex;justify-content:space-between;align-items:flex-start}
+.stat-card .lbl{font-size:.8rem;font-weight:600;margin-bottom:6px}
+.stat-card .val{font-size:1.7rem;font-weight:800;line-height:1;margin-bottom:5px}
+.stat-card .sub{font-size:.76rem;font-weight:600}
+.sc-blue{background:#EBF3FF;}.sc-blue .lbl{color:#3b82f6}.sc-blue .val{color:#1d4ed8}.sc-blue .sub{color:#3b82f6}
+.sc-green{background:#E6FAF5;}.sc-green .lbl{color:#10b981}.sc-green .val{color:#059669}.sc-green .sub{color:#10b981}
+.sc-orange{background:#FFF4E0;}.sc-orange .lbl{color:#d97706}.sc-orange .val{color:#b45309}.sc-orange .sub{color:#d97706}
+.sc-purple{background:#F3EEFF;}.sc-purple .lbl{color:#8b5cf6}.sc-purple .val{color:#6d28d9}.sc-purple .sub{color:#8b5cf6}
+.sc-icon{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center}
+.sc-icon svg{width:20px;height:20px}
+
+.charts2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px}
+.chart-card{background:var(--white);border-radius:12px;padding:22px 24px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.chart-card h3{font-size:.92rem;font-weight:700;margin-bottom:16px}
+.chart-wrap{position:relative;height:240px}
+
+.actions4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.action-card{background:var(--white);border-radius:12px;padding:20px 22px;box-shadow:0 1px 6px rgba(0,0,0,.06);cursor:pointer;transition:box-shadow .18s,transform .18s}
+.action-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);transform:translateY(-2px)}
+.action-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.action-icon svg{width:20px;height:20px}
+.ai-blue{background:#EBF3FF;color:#3b82f6}
+.ai-green{background:#E6FAF5;color:#10b981}
+.ai-purple{background:#F3EEFF;color:#8b5cf6}
+.ai-red{background:#FEE8E8;color:#e53935}
+.action-card h4{font-size:.88rem;font-weight:800;margin-bottom:4px}
+.action-card p{font-size:.78rem;color:var(--mid)}
+
+/* ─── ALL USERS ─── */
+.content-card{background:var(--white);border-radius:12px;padding:24px 26px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.card-head h3{font-size:.95rem;font-weight:700}
+.search-wrap{position:relative;display:flex;align-items:center}
+.search-wrap svg{position:absolute;left:11px;width:16px;height:16px;color:#bbb}
+.search-wrap input{padding:8px 12px 8px 34px;border:1.5px solid var(--border);border-radius:8px;font-family:'Nunito',sans-serif;font-size:.84rem;outline:none;width:240px;transition:border-color .2s}
+.search-wrap input:focus{border-color:var(--orange)}
+table{width:100%;border-collapse:collapse}
+thead tr{background:#f9f9f9;border-bottom:1.5px solid var(--border)}
+th{font-size:.75rem;font-weight:800;color:var(--mid);padding:10px 14px;text-align:left;letter-spacing:.04em;text-transform:uppercase}
+tbody tr{border-bottom:1px solid var(--border)}
+tbody tr:last-child{border-bottom:none}
+td{padding:13px 14px;font-size:.85rem;vertical-align:middle}
+.avatar{width:34px;height:34px;border-radius:50%;background:#BFD7F0;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;color:#2a6496;margin-right:10px;flex-shrink:0}
+.att-cell{display:flex;align-items:center}
+.role-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.78rem;font-weight:700}
+.rb-admin{background:#E8F0FD;color:#3b6fe0}
+.rb-organizer{background:#FFF8DC;color:#b8860b}
+.rb-attendee{background:#E0F4FF;color:#2196f3}
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:.78rem;font-weight:700;background:#E6FAF0;color:#1a9e5c}
+.status-badge svg{width:13px;height:13px}
+.action-btns{display:flex;gap:6px}
+.act-btn{font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:700;padding:4px 11px;border-radius:6px;cursor:pointer;border:none;transition:opacity .15s}
+.act-edit{background:#EBF3FF;color:#3b82f6}
+.act-suspend{background:#FFF4E0;color:#d97706}
+.act-delete{background:#FEE8E8;color:#e53935}
+.act-btn:hover{opacity:.8}
+
+/* ─── SYSTEM SETTINGS ─── */
+.settings-section{border:1.5px solid var(--border);border-radius:10px;padding:20px 22px;margin-bottom:16px}
+.section-head{display:flex;align-items:center;gap:9px;margin-bottom:16px}
+.section-head svg{width:20px;height:20px}
+.section-head h4{font-size:.92rem;font-weight:800}
+.sh-blue{color:#3b82f6}.sh-green{color:#10b981}.sh-red{color:#e53935}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
+.setting-row:last-of-type{border-bottom:none}
+.setting-info h5{font-size:.87rem;font-weight:700;margin-bottom:2px}
+.setting-info p{font-size:.78rem;color:var(--mid)}
+/* Toggle */
+.toggle{position:relative;width:46px;height:26px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;background:#ccc;border-radius:26px;cursor:pointer;transition:.3s}
+.slider::before{content:'';position:absolute;width:20px;height:20px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.toggle input:checked+.slider{background:#3b82f6}
+.toggle input:checked+.slider::before{transform:translateX(20px)}
+.dl-btn{display:inline-flex;align-items:center;gap:7px;background:#16a34a;color:#fff;padding:9px 18px;border-radius:8px;font-family:'Nunito',sans-serif;font-size:.83rem;font-weight:700;border:none;cursor:pointer;margin-top:12px;transition:background .18s}
+.dl-btn:hover{background:#15803d}
+.dl-btn svg{width:16px;height:16px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.info-box{background:#f7f7f7;border-radius:8px;padding:12px 14px}
+.info-box label{font-size:.75rem;color:var(--mid);font-weight:600;display:block;margin-bottom:3px}
+.info-box span{font-size:.9rem;font-weight:700}
+.save-btn{width:100%;padding:14px;background:var(--orange);color:#fff;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:800;border:none;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:20px;transition:background .18s}
+.save-btn:hover{background:var(--orange-h)}
+.save-btn svg{width:18px;height:18px}
+
+/* ─── AUDIT LOGS ─── */
+.export-btn{display:inline-flex;align-items:center;gap:7px;background:#3b82f6;color:#fff;padding:9px 18px;border-radius:8px;font-family:'Nunito',sans-serif;font-size:.83rem;font-weight:700;border:none;cursor:pointer;transition:background .18s}
+.export-btn:hover{background:#2563eb}
+.export-btn svg{width:16px;height:16px}
+.ts-cell{display:flex;align-items:center;gap:7px;color:var(--mid)}
+.ts-cell svg{width:14px;height:14px;flex-shrink:0}
+
+/* ─── SYSTEM HEALTH ─── */
+.health-top{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px}
+.usage-card{background:var(--white);border-radius:12px;padding:20px 22px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.usage-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.usage-head .lbl{font-size:.82rem;color:var(--mid);font-weight:600}
+.usage-head svg{width:22px;height:22px}
+.usage-pct{font-size:1.8rem;font-weight:800;margin-bottom:10px}
+.progress-bar{height:8px;background:#e5e5e5;border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;border-radius:4px;transition:width .5s ease}
+.uc-red .usage-pct{color:#e53935}.uc-red .progress-fill{background:#e53935}.uc-red svg{color:#e53935}
+.uc-blue .usage-pct{color:#3b82f6}.uc-blue .progress-fill{background:#3b82f6}.uc-blue svg{color:#3b82f6}
+.uc-green .usage-pct{color:#16a34a}.uc-green .progress-fill{background:#16a34a}.uc-green svg{color:#16a34a}
+.refresh-btn{display:inline-flex;align-items:center;gap:7px;background:#3b82f6;color:#fff;padding:9px 18px;border-radius:8px;font-family:'Nunito',sans-serif;font-size:.83rem;font-weight:700;border:none;cursor:pointer;transition:background .18s}
+.refresh-btn:hover{background:#2563eb}
+.refresh-btn svg{width:15px;height:15px}
+.health-bottom{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.service-card,.backup-card{background:var(--white);border-radius:12px;padding:20px 22px;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.service-card h4,.backup-card h4{font-size:.9rem;font-weight:800;margin-bottom:14px}
+.service-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)}
+.service-row:last-child{border-bottom:none}
+.service-row span{font-size:.84rem;color:var(--mid)}
+.op-badge{display:inline-flex;align-items:center;gap:5px;font-size:.8rem;font-weight:700;color:#16a34a}
+.op-badge svg{width:14px;height:14px}
+.backup-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.backup-row:last-child{border-bottom:none}
+.backup-row .bk-lbl{font-size:.84rem;color:var(--mid)}
+.backup-row .bk-val{font-size:.84rem;font-weight:600}
+.bk-success{color:#16a34a;font-weight:700;display:flex;align-items:center;gap:5px}
+.bk-success svg{width:14px;height:14px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><div>Planning</div><div>Center</div></div>
+  <div class="nav-actions">
+    <button class="btn-nav" onclick="window.location.href='home_page_login.html'">Home</button>
+    <button class="btn-nav active">Dashboard</button>
+    <button class="btn-nav logout" onclick="window.location.href='home_page_login.html'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Logout
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-title">
+    <h1>System Administrator Dashboard</h1>
+    <p>Complete system control and monitoring – Manage all aspects of the platform</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('overview',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Overview
+    </button>
+    <button class="tab" onclick="switchTab('users',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>All Users
+    </button>
+    <button class="tab" onclick="switchTab('settings',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>System Settings
+    </button>
+    <button class="tab" onclick="switchTab('audit',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Audit Logs
+    </button>
+    <button class="tab" onclick="switchTab('health',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>System Health
+    </button>
+  </div>
+
+  <!-- ══ OVERVIEW ══ -->
+  <div id="panel-overview" class="panel active">
+    <div class="stats4">
+      <div class="stat-card sc-blue">
+        <div>
+          <div class="lbl">Total Platform Users</div>
+          <div class="val">8,547</div>
+          <div class="sub">Across all roles</div>
+        </div>
+        <div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+      </div>
+      <div class="stat-card sc-green">
+        <div>
+          <div class="lbl">System Uptime</div>
+          <div class="val">99.8%</div>
+          <div class="sub">Last 30 days</div>
+        </div>
+        <div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+      </div>
+      <div class="stat-card sc-orange">
+        <div>
+          <div class="lbl">Database Size</div>
+          <div class="val">24.5 GB</div>
+          <div class="sub">42% of capacity</div>
+        </div>
+        <div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+      </div>
+      <div class="stat-card sc-purple">
+        <div>
+          <div class="lbl">Active Sessions</div>
+          <div class="val">342</div>
+          <div class="sub">Currently online</div>
+        </div>
+        <div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      </div>
+    </div>
+
+    <div class="charts2">
+      <div class="chart-card">
+        <h3>User Role Distribution</h3>
+        <div class="chart-wrap"><canvas id="pieChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>System Resource Usage</h3>
+        <div class="chart-wrap"><canvas id="resourceChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="actions4">
+      <div class="action-card">
+        <div class="action-icon ai-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+        <h4>Run Backup</h4><p>Manual database backup</p>
+      </div>
+      <div class="action-card">
+        <div class="action-icon ai-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <h4>Email Config</h4><p>Manage email settings</p>
+      </div>
+      <div class="action-card">
+        <div class="action-icon ai-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+        <h4>Payment Gateway</h4><p>Configure payments</p>
+      </div>
+      <div class="action-card">
+        <div class="action-icon ai-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h4>Security</h4><p>Security settings</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ALL USERS ══ -->
+  <div id="panel-users" class="panel">
+    <div class="content-card">
+      <div class="card-head">
+        <h3>All System Users</h3>
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Search users..." id="userSearch"/>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th>Attendee</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="usersTable">
+          <tr>
+            <td><div class="att-cell"><div class="avatar">M</div>Muon Sokea</div></td>
+            <td>muon.sokea@gmail.com</td>
+            <td><span class="role-badge rb-admin">Administrator</span></td>
+            <td><span class="status-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Active</span></td>
+            <td><div class="action-btns"><button class="act-btn act-edit">Edit</button><button class="act-btn act-suspend">Suspend</button><button class="act-btn act-delete">Delete</button></div></td>
+          </tr>
+          <tr>
+            <td><div class="att-cell"><div class="avatar">P</div>Proeung Sivly</div></td>
+            <td>proeung.sivly@gmail.com</td>
+            <td><span class="role-badge rb-organizer">Organizer</span></td>
+            <td><span class="status-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Active</span></td>
+            <td><div class="action-btns"><button class="act-btn act-edit">Edit</button><button class="act-btn act-suspend">Suspend</button><button class="act-btn act-delete">Delete</button></div></td>
+          </tr>
+          <tr>
+            <td><div class="att-cell"><div class="avatar">S</div>San Sotheayuth</div></td>
+            <td>sotheayuth@gmail.com</td>
+            <td><span class="role-badge rb-attendee">Attendee</span></td>
+            <td><span class="status-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Active</span></td>
+            <td><div class="action-btns"><button class="act-btn act-edit">Edit</button><button class="act-btn act-suspend">Suspend</button><button class="act-btn act-delete">Delete</button></div></td>
+          </tr>
+          <tr>
+            <td><div class="att-cell"><div class="avatar">L</div>Lang Socheat</div></td>
+            <td>socheat@gmail.com</td>
+            <td><span class="role-badge rb-attendee">Attendee</span></td>
+            <td><span class="status-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Active</span></td>
+            <td><div class="action-btns"><button class="act-btn act-edit">Edit</button><button class="act-btn act-suspend">Suspend</button><button class="act-btn act-delete">Delete</button></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ SYSTEM SETTINGS ══ -->
+  <div id="panel-settings" class="panel">
+    <div class="content-card">
+      <h3 style="font-size:.95rem;font-weight:800;margin-bottom:20px">System Configuration</h3>
+
+      <!-- Notifications -->
+      <div class="settings-section">
+        <div class="section-head">
+          <svg class="sh-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <h4>Notification Settings</h4>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><h5>Email Notifications</h5><p>Send email notifications to users</p></div>
+          <label class="toggle"><input type="checkbox" checked/><span class="slider"></span></label>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><h5>SMS Notifications</h5><p>Send SMS notifications to users</p></div>
+          <label class="toggle"><input type="checkbox" checked/><span class="slider"></span></label>
+        </div>
+      </div>
+
+      <!-- Database -->
+      <div class="settings-section">
+        <div class="section-head">
+          <svg class="sh-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          <h4>Database Settings</h4>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><h5>Automatic Backups</h5><p>Daily automated database backups at 2:00 AM</p></div>
+          <label class="toggle"><input type="checkbox" checked/><span class="slider"></span></label>
+        </div>
+        <button class="dl-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Latest Backup
+        </button>
+      </div>
+
+      <!-- Security -->
+      <div class="settings-section">
+        <div class="section-head">
+          <svg class="sh-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <h4>Security Settings</h4>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info"><h5>Two-Factor Authentication</h5><p>Require 2FA for all administrators</p></div>
+          <label class="toggle"><input type="checkbox" checked/><span class="slider"></span></label>
+        </div>
+        <div class="info-grid">
+          <div class="info-box"><label>Session Timeout</label><span>30 minutes</span></div>
+          <div class="info-box"><label>Password Complexity</label><span>High</span></div>
+        </div>
+      </div>
+
+      <button class="save-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Save All Settings
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ AUDIT LOGS ══ -->
+  <div id="panel-audit" class="panel">
+    <div class="content-card">
+      <div class="card-head">
+        <h3>System Audit Logs</h3>
+        <button class="export-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export Logs
+        </button>
+      </div>
+      <table>
+        <thead><tr><th>Timestamp</th><th>User</th><th>Action</th><th>Detail</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><div class="ts-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2026-03-27 14:32:15</div></td>
+            <td>muon.sokea@gmail.com</td>
+            <td>User Account Modified</td>
+            <td>Updated permissions for organizer</td>
+            <td><span class="status-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Active</span></td>
+          </tr>
+          <tr>
+            <td><div class="ts-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2026-03-27 14:32:15</div></td>
+            <td>proeung.sivly@gmail.com</td>
+            <td>System Settings Changed</td>
+            <td>Updated email notification settings</td>
+            <td><span class="status-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Active</span></td>
+          </tr>
+          <tr>
+            <td><div class="ts-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2026-03-27 14:32:15</div></td>
+            <td>sotheayuth@gmail.com</td>
+            <td>Event Approval</td>
+            <td>Approved event: Tech Summit 2026</td>
+            <td><span class="status-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Active</span></td>
+          </tr>
+          <tr>
+            <td><div class="ts-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2026-03-27 14:32:15</div></td>
+            <td>socheat@gmail.com</td>
+            <td>Database Backup</td>
+            <td>Automated daily backup completed</td>
+            <td><span class="status-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Active</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ SYSTEM HEALTH ══ -->
+  <div id="panel-health" class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-size:.95rem;font-weight:700">System Health Monitoring</span>
+      <button class="refresh-btn" onclick="refreshHealth()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+        Refresh Data
+      </button>
+    </div>
+
+    <div class="health-top">
+      <div class="usage-card uc-red">
+        <div class="usage-head"><span class="lbl">CPU Usage</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="usage-pct">72%</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+      </div>
+      <div class="usage-card uc-blue">
+        <div class="usage-head"><span class="lbl">Memory Usage</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="usage-pct">68%</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:68%"></div></div>
+      </div>
+      <div class="usage-card uc-green">
+        <div class="usage-head"><span class="lbl">Disk Usage</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+        <div class="usage-pct">42%</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:42%"></div></div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3>24-Hour Resource Monitoring</h3>
+      <div class="chart-wrap" style="height:260px"><canvas id="healthChart"></canvas></div>
+    </div>
+
+    <div class="health-bottom">
+      <div class="service-card">
+        <h4>Service Status</h4>
+        <div class="service-row"><span>Web Server</span><span class="op-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Operational</span></div>
+        <div class="service-row"><span>Database Server</span><span class="op-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Operational</span></div>
+        <div class="service-row"><span>Email Service</span><span class="op-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Operational</span></div>
+        <div class="service-row"><span>SMS Service</span><span class="op-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Operational</span></div>
+        <div class="service-row"><span>Payment Gateway</span><span class="op-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Operational</span></div>
+      </div>
+      <div class="backup-card">
+        <h4>Last Backup</h4>
+        <div class="backup-row"><span class="bk-lbl">Backup Date</span><span class="bk-val">2026-03-27 02:00:00</span></div>
+        <div class="backup-row"><span class="bk-lbl">Backup Size</span><span class="bk-val">24.3 GB</span></div>
+        <div class="backup-row"><span class="bk-lbl">Status</span><span class="bk-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Successful</span></div>
+        <div class="backup-row"><span class="bk-lbl">Next Scheduled</span><span class="bk-val">2026-03-28 02:00:00</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Tab switching ── */
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + id).classList.add('active');
+  if (id === 'health' && !window._healthChartDone) initHealthChart();
+}
+
+/* ── Pie Chart ── */
+new Chart(document.getElementById('pieChart'), {
+  type: 'pie',
+  data: {
+    labels: ['Attendees: 92%', 'Organizers: 6%', 'Administrators: 2%', 'System Admins: 1%'],
+    datasets: [{ data: [92, 6, 2, 1], backgroundColor: ['#3b82f6','#22c55e','#f97316','#ef4444'], borderWidth: 2, borderColor: '#fff' }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'right', labels: { font: { family: 'Nunito', size: 11 }, padding: 14 } }
+    }
+  }
+});
+
+/* ── Resource Line Chart (Overview) ── */
+new Chart(document.getElementById('resourceChart'), {
+  type: 'line',
+  data: {
+    labels: ['00:00','04:00','08:00','12:00','16:00','20:00'],
+    datasets: [
+      { label: 'CPU', data: [62,64,75,86,75,62], borderColor:'#ef4444', borderWidth:2.2, pointBackgroundColor:'#fff', pointBorderColor:'#ef4444', pointBorderWidth:2, pointRadius:4, fill:false, tension:.35 },
+      { label: 'Memory', data: [63,65,70,76,68,60], borderColor:'#3b82f6', borderWidth:2.2, pointBackgroundColor:'#fff', pointBorderColor:'#3b82f6', pointBorderWidth:2, pointRadius:4, fill:false, tension:.35 },
+      { label: 'Disk', data: [36,37,38,38,38,38], borderColor:'#22c55e', borderWidth:2.2, pointBackgroundColor:'#fff', pointBorderColor:'#22c55e', pointBorderWidth:2, pointRadius:4, fill:false, tension:.35 }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { font: { family:'Nunito',size:11 } } } },
+    scales: {
+      x: { grid:{color:'#f0f0f0'}, ticks:{font:{family:'Nunito',size:10}} },
+      y: { min:0, max:100, ticks:{stepSize:25,font:{family:'Nunito',size:10}}, grid:{color:'#f0f0f0'} }
+    }
+  }
+});
+
+/* ── Health Chart (lazy) ── */
+function initHealthChart() {
+  window._healthChartDone = true;
+  new Chart(document.getElementById('healthChart'), {
+    type: 'line',
+    data: {
+      labels: ['00:00','04:00','08:00','12:00','16:00','20:00'],
+      datasets: [
+        { label: 'CPU', data: [0,55,77,88,68,62], borderColor:'#ef4444', borderWidth:2.2, pointBackgroundColor:'#fff', pointBorderColor:'#ef4444', pointBorderWidth:2, pointRadius:4.5, fill:false, tension:.35 },
+        { label: 'Memory', data: [62,60,70,75,68,60], borderColor:'#3b82f6', borderWidth:2.2, pointBackgroundColor:'#fff', pointBorderColor:'#3b82f6', pointBorderWidth:2, pointRadius:4.5, fill:false, tension:.35 },
+        { label: 'Disk', data: [37,37,38,38,39,40], borderColor:'#22c55e', borderWidth:2.2, pointBackgroundColor:'#fff', pointBorderColor:'#22c55e', pointBorderWidth:2, pointRadius:4.5, fill:false, tension:.35 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { font:{family:'Nunito',size:11} } } },
+      scales: {
+        x: { grid:{color:'#f0f0f0'}, ticks:{font:{family:'Nunito',size:10}} },
+        y: { min:0, max:100, ticks:{stepSize:25,font:{family:'Nunito',size:10}}, grid:{color:'#f0f0f0',borderDash:[4,4]} }
+      }
+    }
+  });
+}
+
+/* ── User search ── */
+document.getElementById('userSearch').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  document.querySelectorAll('#usersTable tr').forEach(r => {
+    r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+});
+
+/* ── Refresh button ── */
+function refreshHealth() {
+  const btn = document.querySelector('.refresh-btn');
+  btn.style.opacity = '.6';
+  setTimeout(() => btn.style.opacity = '1', 800);
+}
+</script>
+</body>
+</html>
