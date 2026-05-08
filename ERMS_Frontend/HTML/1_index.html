@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planning Center — Discover Events</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/events.css" />
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+    <a class="nav-logo" href="index.html">
+      <span class="logo-top">Planning</span>
+      <span class="logo-bottom">Center</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <button class="btn btn-primary" data-page="index">Home</button>
+      <button class="btn btn-outline" data-page="dashboard"
+        onclick="goToDashboard()">Dashboard</button>
+      <button class="btn btn-outline" onclick="logout()">🚪 Logout</button>
+    </div>
+  </nav>
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Discover Amazing Events</h1>
+      <p>Join thousands of attendees at conferences, workshops, and networking events</p>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search events..." />
+        <button class="search-btn" onclick="handleSearch()">🔍</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats Bar ── -->
+  <section class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-icon">📅</div>
+      <div class="stat-number">150+</div>
+      <div class="stat-label">Upcoming Events</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">👥</div>
+      <div class="stat-number">50K+</div>
+      <div class="stat-label">Total Attendees</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon">📊</div>
+      <div class="stat-number">90%</div>
+      <div class="stat-label">Satisfaction Rate</div>
+    </div>
+  </section>
+
+  <!-- ── Event Catalog ── -->
+  <main class="events-section">
+    <div class="filter-row">
+      <span>🔽</span>
+      <span>Filter by Category</span>
+      <button class="filter-pill active" data-category="All"
+        onclick="filterByCategory('All')">All</button>
+      <button class="filter-pill" data-category="Technology"
+        onclick="filterByCategory('Technology')">Technology</button>
+      <button class="filter-pill" data-category="Sports"
+        onclick="filterByCategory('Sports')">Sports</button>
+      <button class="filter-pill" data-category="Education"
+        onclick="filterByCategory('Education')">Education</button>
+      <button class="filter-pill" data-category="Workshop"
+        onclick="filterByCategory('Workshop')">Workshop</button>
+      <button class="filter-pill" data-category="Business"
+        onclick="filterByCategory('Business')">Business</button>
+      <button class="filter-pill" data-category="Entertainment"
+        onclick="filterByCategory('Entertainment')">Entertainment</button>
+    </div>
+    <div class="events-grid" id="eventsGrid">
+      <div class="spinner"></div>
+    </div>
+  </main>
+
+  <script src="js/navbar.js"></script>
+  <script src="js/events.js"></script>
+</body>
+</html>

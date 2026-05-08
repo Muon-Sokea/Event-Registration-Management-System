@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planning Center — Organizer Dashboard</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/navbar.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+    <a class="nav-logo" href="../index.html">
+      <span class="logo-top">Planning</span>
+      <span class="logo-bottom">Center</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <button class="btn btn-outline"
+        onclick="location.href='../index.html'">Home</button>
+      <button class="btn btn-primary">Dashboard</button>
+      <button class="btn btn-outline" onclick="logout()">🚪 Logout</button>
+    </div>
+  </nav>
+
+  <div class="dashboard-page">
+
+    <!-- Header -->
+    <div class="dashboard-header">
+      <div>
+        <h1>Organizer Dashboard</h1>
+        <p>Create and manage your events</p>
+      </div>
+      <button class="btn btn-primary"
+        onclick="location.href='../pages/event-register.html'">
+        ➕ Create Event
+      </button>
+    </div>
+
+    <div class="dashboard-body">
+
+      <!-- Stat Cards -->
+      <div class="stats-cards">
+        <div class="stat-card">
+          <div class="stat-card-info">
+            <div class="label">Total Events</div>
+            <div class="value">3</div>
+          </div>
+          <div class="stat-card-icon">📋</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-info">
+            <div class="label">Total Registrations</div>
+            <div class="value">3,900</div>
+          </div>
+          <div class="stat-card-icon">👥</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-info">
+            <div class="label">Total Revenue</div>
+            <div class="value">$850K</div>
+          </div>
+          <div class="stat-card-icon">💰</div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="tab-events"
+          onclick="switchTab('tab-events')">📋 My Events</button>
+        <button class="tab-btn" data-tab="tab-attendees"
+          onclick="switchTab('tab-attendees')">👥 Attendees</button>
+        <button class="tab-btn" data-tab="tab-notifications"
+          onclick="switchTab('tab-notifications')">🔔 Send Notification</button>
+      </div>
+
+      <!-- Tab: My Events -->
+      <div class="tab-content active" id="tab-events">
+        <div class="section-title">Managed Events</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Event Title</th>
+                <th>Date</th>
+                <th>Registered / Capacity</th>
+                <th>Availability</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="managedEventsBody">
+              <!-- Populated by dashboard.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab: Attendees -->
+      <div class="tab-content" id="tab-attendees">
+        <div class="section-title">Registered Attendees</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Attendee</th>
+                <th>Email</th>
+                <th>Event</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="attendeesTableBody">
+              <!-- Populated by dashboard.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab: Send Notification -->
+      <div class="tab-content" id="tab-notifications">
+        <div class="section-title">Send Notification</div>
+        <div class="card" style="max-width:560px">
+          <div class="form-group">
+            <label>Select Event</label>
+            <select>
+              <option>Tech Innovation Summit 2026</option>
+              <option>Pre-Event Planning Workshop</option>
+              <option>Business Leadership Conference</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Notification Type</label>
+            <select>
+              <option>Email</option>
+              <option>SMS</option>
+              <option>Both</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea rows="4"
+              placeholder="Enter your notification message..."></textarea>
+          </div>
+          <button class="btn btn-primary"
+            onclick="alert('Notification sent successfully!')">
+            🔔 Send Notification
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../js/navbar.js"></script>
+  <script src="../js/dashboard.js"></script>
+  <script>
+    requireAuth();
+    requireRole(["Organizer"]);
+    switchTab("tab-events");
+  </script>
+</body>
+</html>

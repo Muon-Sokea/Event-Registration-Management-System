@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planning Center — Supervisor Dashboard</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/navbar.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <style>
+    .health-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .health-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--border-radius-lg);
+      padding: 16px;
+    }
+    .health-label { font-size: 13px; color: var(--text-light); margin-bottom: 6px; }
+    .health-value { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .health-bar {
+      height: 6px;
+      background: #eee;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .health-fill { height: 100%; border-radius: 3px; }
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .toggle-info .t-label { font-size: 14px; font-weight: 500; }
+    .toggle-info .t-sub   { font-size: 12px; color: var(--text-light); }
+    .toggle {
+      position: relative;
+      width: 44px; height: 24px;
+      background: var(--primary);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+      border: none;
+    }
+    .toggle::after {
+      content: "";
+      position: absolute;
+      width: 18px; height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      top: 3px; left: 3px;
+      transition: transform 0.2s;
+    }
+    .toggle.off { background: #ccc; }
+    .toggle.off::after { transform: translateX(0); }
+    .toggle.on::after  { transform: translateX(20px); }
+    .service-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .service-ok { color: var(--success); font-weight: 500; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+    <a class="nav-logo" href="../index.html">
+      <span class="logo-top">Planning</span>
+      <span class="logo-bottom">Center</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <button class="btn btn-outline"
+        onclick="location.href='../index.html'">Home</button>
+      <button class="btn btn-primary">Dashboard</button>
+      <button class="btn btn-outline" onclick="logout()">🚪 Logout</button>
+    </div>
+  </nav>
+
+  <div class="dashboard-page">
+
+    <div class="dashboard-header">
+      <div>
+        <h1>System Administrator Dashboard</h1>
+        <p>Complete system control and monitoring — Manage all aspects of the platform</p>
+      </div>
+    </div>
+
+    <div class="dashboard-body">
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="tab-overview"
+          onclick="switchTab('tab-overview')">📊 Overview</button>
+        <button class="tab-btn" data-tab="tab-users"
+          onclick="switchTab('tab-users')">👥 All Users</button>
+        <button class="tab-btn" data-tab="tab-settings"
+          onclick="switchTab('tab-settings')">⚙️ System Settings</button>
+        <button class="tab-btn" data-tab="tab-audit"
+          onclick="switchTab('tab-audit')">📄 Audit Logs</button>
+        <button class="tab-btn" data-tab="tab-health"
+          onclick="switchTab('tab-health')">🖥️ System Health</button>
+      </div>
+
+      <!-- Tab: Overview -->
+      <div class="tab-content active" id="tab-overview">
+        <div class="stats-cards">
+          <div class="stat-card">
+            <div class="stat-card-info">
+              <div class="label">Total Users</div>
+              <div class="value">1,284</div>
+            </div>
+            <div class="stat-card-icon">👥</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-info">
+              <div class="label">Active Events</div>
+              <div class="value">48</div>
+            </div>
+            <div class="stat-card-icon">📋</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-info">
+              <div class="label">Registrations</div>
+              <div class="value">9,430</div>
+            </div>
+            <div class="stat-card-icon">🎫</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-info">
+              <div class="label">System Uptime</div>
+              <div class="value">99.9%</div>
+            </div>
+            <div class="stat-card-icon">🟢</div>
+          </div>
+        </div>
+        <div class="section-title">Recent Registrations</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Attendee</th>
+                <th>Email</th>
+                <th>Event</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="attendeesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab: All Users -->
+      <div class="tab-content" id="tab-users">
+        <div class="section-title">All Users</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div style="display:flex;align-items:center;gap:10px">
+                  <div class="avatar-circle">M</div>Muon Sokea</div></td>
+                <td>muonsokea@gmail.com</td>
+                <td>Admin</td>
+                <td><span class="badge badge-confirmed">Active</span></td>
+                <td><div class="action-btns">
+                  <button class="btn btn-outline btn-sm">✏️ Edit</button>
+                  <button class="btn btn-danger btn-sm">🚫 Suspend</button>
+                </div></td>
+              </tr>
+              <tr>
+                <td><div style="display:flex;align-items:center;gap:10px">
+                  <div class="avatar-circle">S</div>San Sotheayuth</div></td>
+                <td>attendee@example.com</td>
+                <td>Attendee</td>
+                <td><span class="badge badge-confirmed">Active</span></td>
+                <td><div class="action-btns">
+                  <button class="btn btn-outline btn-sm">✏️ Edit</button>
+                  <button class="btn btn-danger btn-sm">🚫 Suspend</button>
+                </div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab: System Settings -->
+      <div class="tab-content" id="tab-settings">
+        <div class="section-title">System Configuration</div>
+
+        <!-- Notification Settings -->
+        <div class="card" style="margin-bottom:16px">
+          <div style="font-size:15px;font-weight:600;margin-bottom:14px">
+            🔔 Notification Settings
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <div class="t-label">Email Notifications</div>
+              <div class="t-sub">Send email notifications to users</div>
+            </div>
+            <button class="toggle on" onclick="this.classList.toggle('on');
+              this.classList.toggle('off')"></button>
+          </div>
+          <div class="toggle-row" style="border:none">
+            <div class="toggle-info">
+              <div class="t-label">SMS Notifications</div>
+              <div class="t-sub">Send SMS notifications to users</div>
+            </div>
+            <button class="toggle on" onclick="this.classList.toggle('on');
+              this.classList.toggle('off')"></button>
+          </div>
+        </div>
+
+        <!-- Database Settings -->
+        <div class="card" style="margin-bottom:16px">
+          <div style="font-size:15px;font-weight:600;margin-bottom:14px">
+            🗄️ Database Settings
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <div class="t-label">Automatic Backups</div>
+              <div class="t-sub">Daily automated database backups at 2:00 AM</div>
+            </div>
+            <button class="toggle on" onclick="this.classList.toggle('on');
+              this.classList.toggle('off')"></button>
+          </div>
+          <div style="margin-top:12px">
+            <button class="btn btn-success btn-sm"
+              onclick="alert('Latest backup downloaded!')">
+              ⬇️ Download Latest Backup
+            </button>
+          </div>
+        </div>
+
+        <!-- Security Settings -->
+        <div class="card" style="margin-bottom:16px">
+          <div style="font-size:15px;font-weight:600;margin-bottom:14px">
+            🛡️ Security Settings
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <div class="t-label">Two-Factor Authentication</div>
+              <div class="t-sub">Require 2FA for all administrators</div>
+            </div>
+            <button class="toggle on" onclick="this.classList.toggle('on');
+              this.classList.toggle('off')"></button>
+          </div>
+          <div style="display:flex;gap:24px;margin-top:14px;font-size:14px">
+            <div>
+              <div style="color:var(--text-light);font-size:12px">Session Timeout</div>
+              <div style="font-weight:600">30 minutes</div>
+            </div>
+            <div>
+              <div style="color:var(--text-light);font-size:12px">Password Complexity</div>
+              <div style="font-weight:600">High</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-full"
+          onclick="alert('Settings saved successfully!')">
+          ⚙️ Save All Settings
+        </button>
+      </div>
+
+      <!-- Tab: Audit Logs -->
+      <div class="tab-content" id="tab-audit">
+        <div class="section-title">Audit Logs</div>
+        <div style="overflow-x:auto">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>User</th>
+                <th>Action</th>
+                <th>IP Address</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2026-03-27 08:42</td>
+                <td>Muon Sokea</td>
+                <td>User login</td>
+                <td>192.168.1.1</td>
+                <td><span class="badge badge-confirmed">Success</span></td>
+              </tr>
+              <tr>
+                <td>2026-03-27 09:10</td>
+                <td>San Sotheayuth</td>
+                <td>Event registration</td>
+                <td>192.168.1.2</td>
+                <td><span class="badge badge-confirmed">Success</span></td>
+              </tr>
+              <tr>
+                <td>2026-03-27 09:35</td>
+                <td>Unknown</td>
+                <td>Failed login attempt</td>
+                <td>203.45.67.89</td>
+                <td><span class="badge badge-full">Failed</span></td>
+              </tr>
+              <tr>
+                <td>2026-03-27 10:00</td>
+                <td>Proeung Sivly</td>
+                <td>Event created</td>
+                <td>192.168.1.3</td>
+                <td><span class="badge badge-confirmed">Success</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab: System Health -->
+      <div class="tab-content" id="tab-health">
+        <div style="display:flex;align-items:center;
+          justify-content:space-between;margin-bottom:16px">
+          <div class="section-title" style="margin:0">System Health Monitoring</div>
+          <button class="btn btn-outline btn-sm"
+            onclick="alert('Data refreshed!')">🔄 Refresh Data</button>
+        </div>
+
+        <!-- Health Cards -->
+        <div class="health-cards">
+          <div class="health-card">
+            <div class="health-label">CPU Usage</div>
+            <div class="health-value" style="color:var(--danger)">72%</div>
+            <div class="health-bar">
+              <div class="health-fill"
+                style="width:72%;background:var(--danger)"></div>
+            </div>
+          </div>
+          <div class="health-card">
+            <div class="health-label">Memory Usage</div>
+            <div class="health-value" style="color:var(--info)">68%</div>
+            <div class="health-bar">
+              <div class="health-fill"
+                style="width:68%;background:var(--info)"></div>
+            </div>
+          </div>
+          <div class="health-card">
+            <div class="health-label">Disk Usage</div>
+            <div class="health-value" style="color:var(--success)">42%</div>
+            <div class="health-bar">
+              <div class="health-fill"
+                style="width:42%;background:var(--success)"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service Status -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="card">
+            <div style="font-size:15px;font-weight:600;margin-bottom:12px">
+              Service Status
+            </div>
+            <div class="service-row">
+              <span>Web Server</span>
+              <span class="service-ok">✅ Operational</span>
+            </div>
+            <div class="service-row">
+              <span>Database Server</span>
+              <span class="service-ok">✅ Operational</span>
+            </div>
+            <div class="service-row">
+              <span>Email Service</span>
+              <span class="service-ok">✅ Operational</span>
+            </div>
+            <div class="service-row">
+              <span>SMS Service</span>
+              <span class="service-ok">✅ Operational</span>
+            </div>
+            <div class="service-row" style="border:none">
+              <span>Payment Gateway</span>
+              <span class="service-ok">✅ Operational</span>
+            </div>
+          </div>
+          <div class="card">
+            <div style="font-size:15px;font-weight:600;margin-bottom:12px">
+              Last Backup
+            </div>
+            <div class="service-row">
+              <span>Backup Date</span>
+              <span>2026-03-27 02:00:00</span>
+            </div>
+            <div class="service-row">
+              <span>Backup Size</span>
+              <span>24.3 GB</span>
+            </div>
+            <div class="service-row">
+              <span>Status</span>
+              <span class="service-ok">✅ Successful</span>
+            </div>
+            <div class="service-row" style="border:none">
+              <span>Next Scheduled</span>
+              <span>2026-03-28 02:00:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../js/navbar.js"></script>
+  <script src="../js/dashboard.js"></script>
+  <script>
+    requireAuth();
+    requireRole(["Supervisor"]);
+    switchTab("tab-overview");
+  </script>
+</body>
+</html>
