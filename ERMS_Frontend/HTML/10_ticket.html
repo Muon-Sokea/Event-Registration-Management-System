@@ -2,63 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Planning Center — Your Ticket</title>
-  <link rel="stylesheet" href="../css/global.css" />
-  <link rel="stylesheet" href="../css/navbar.css" />
-  <link rel="stylesheet" href="../css/ticket.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../CSS/1_global.css" />
+  <link rel="stylesheet" href="../CSS/2_navbar.css" />
+  <link rel="stylesheet" href="../CSS/7_ticket.css" />
 </head>
 <body>
 
-  <!-- ── Navbar ── -->
   <nav class="navbar">
-    <a class="nav-logo" href="../index.html">
+    <a class="nav-logo" href="../HTML/1_index.html">
       <span class="logo-top">Planning</span>
       <span class="logo-bottom">Center</span>
     </a>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <button class="hamburger" id="hamburger">
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="navLinks">
       <button class="btn btn-outline"
-        onclick="location.href='../index.html'">Home</button>
-      <button class="btn btn-outline"
-        onclick="goToDashboard()">Dashboard</button>
-      <button class="btn btn-outline" onclick="logout()">🚪 Logout</button>
+        onclick="location.href='../HTML/1_index.html'">
+        <i class="ri-home-line"></i> Home
+      </button>
+      <button class="btn btn-outline" onclick="goToDashboard()">
+        <i class="ri-dashboard-line"></i> Dashboard
+      </button>
+      <button class="btn btn-outline" onclick="logout()">
+        <i class="ri-logout-box-r-line"></i> Logout
+      </button>
     </div>
   </nav>
 
-  <!-- ── Success Screen (shows first after payment) ── -->
+  <!-- Success Screen -->
   <div id="successScreen" class="success-screen" style="display:none">
-    <div class="success-icon">✅</div>
+    <div class="success-icon">
+      <i class="ri-checkbox-circle-fill"
+        style="font-size:80px;color:var(--success)"></i>
+    </div>
     <h2>Done</h2>
     <p>Your ticket purchase<br>Successfully completed</p>
-    <div style="font-size:48px;margin:20px 0">🎫</div>
-    <button class="btn btn-primary"
-      style="padding:12px 32px"
+    <div style="font-size:60px;margin:16px 0;color:var(--primary)">
+      <i class="ri-ticket-2-line"></i>
+    </div>
+    <button class="btn btn-primary" style="padding:12px 32px"
       onclick="document.getElementById('successScreen').style.display='none';
                document.getElementById('ticketView').style.display='block'">
       View My Ticket
     </button>
   </div>
 
-  <!-- ── Ticket View ── -->
+  <!-- Ticket View -->
   <div id="ticketView">
     <div class="ticket-page">
       <div class="ticket-card" id="ticketCard">
 
-        <!-- QR Code -->
         <div class="ticket-qr">
           <div id="qrCodeContainer"></div>
         </div>
 
-        <!-- Ticket ID -->
         <div class="ticket-id-label">Ticket ID</div>
         <div class="ticket-id-value" id="ticketIdDisplay">TKT-001-2026</div>
 
         <hr class="ticket-divider" />
 
-        <!-- Event Info -->
         <div class="ticket-event-title" id="ticketEventTitle">
           Tech Innovation Summit 2026
         </div>
@@ -66,43 +72,44 @@
           Attendee: Muon Sokea
         </div>
 
-        <!-- Meta -->
         <div class="ticket-meta">
           <div class="ticket-meta-item">
-            📅 <span id="ticketDate">April 30, 2026</span>
+            <i class="ri-calendar-line"
+              style="color:var(--primary)"></i>
+            <span id="ticketDate">April 30, 2026</span>
           </div>
           <div class="ticket-meta-item">
-            🕘 <span id="ticketTime">9:00 AM - 5:00 PM</span>
+            <i class="ri-time-line"
+              style="color:var(--primary)"></i>
+            <span id="ticketTime">9:00 AM - 5:00 PM</span>
           </div>
           <div class="ticket-meta-item">
-            📍 <span id="ticketLocation">Prey Veng Province</span>
+            <i class="ri-map-pin-line"
+              style="color:var(--primary)"></i>
+            <span id="ticketLocation">Prey Veng Province</span>
           </div>
         </div>
 
-        <!-- Instructions -->
         <div class="ticket-instructions">
-          <strong>Instructions:</strong> Present this QR code at the event
-          entrance for check-in. You can download or screenshot this ticket
-          for offline access.
+          <strong>Instructions:</strong> Present this QR code at the
+          event entrance for check-in. You can download or screenshot
+          this ticket for offline access.
         </div>
 
-        <!-- Download Button -->
         <button class="btn btn-primary btn-full" id="downloadBtn">
-          ⬇️ Download Ticket
+          <i class="ri-download-line"></i> Download Ticket
         </button>
 
-        <!-- Back to Dashboard -->
         <button class="btn btn-outline btn-full"
-          style="margin-top:10px"
-          onclick="goToDashboard()">
-          Back to Dashboard
+          style="margin-top:10px" onclick="goToDashboard()">
+          <i class="ri-arrow-left-line"></i> Back to Dashboard
         </button>
 
       </div>
     </div>
   </div>
 
-  <script src="../js/navbar.js"></script>
-  <script src="../js/ticket.js"></script>
+  <script src="../JS/1_navbar.js"></script>
+  <script src="../JS/5_ticket.js"></script>
 </body>
 </html>

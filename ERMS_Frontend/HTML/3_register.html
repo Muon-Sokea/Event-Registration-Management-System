@@ -2,134 +2,148 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Planning Center — Create Account</title>
-  <link rel="stylesheet" href="css/global.css" />
-  <link rel="stylesheet" href="css/auth.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../CSS/1_global.css" />
+  <link rel="stylesheet" href="../CSS/2_navbar.css" />
+  <link rel="stylesheet" href="../CSS/5_auth.css" />
 </head>
 <body>
+
+  <nav class="navbar">
+    <a class="nav-logo" href="../HTML/1_index.html">
+      <span class="logo-top">Planning</span>
+      <span class="logo-bottom">Center</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <button class="btn btn-outline"
+        onclick="location.href='../HTML/1_index.html'">
+        <i class="ri-home-line"></i> Home
+      </button>
+      <button class="btn btn-outline"
+        onclick="location.href='../HTML/2_login.html'">
+        <i class="ri-login-box-line"></i> Sign in
+      </button>
+      <button class="btn btn-primary">
+        <i class="ri-user-add-line"></i> Sign up
+      </button>
+    </div>
+  </nav>
+
+  <div class="auth-hero">
+    <h2>Discover and Manage Events</h2>
+    <p>Register, Organize, review, and track your event participation.</p>
+  </div>
 
   <div class="auth-page">
     <div class="auth-card">
 
-      <!-- Logo -->
-      <div class="auth-logo">
-        <div class="auth-logo-icon">📅</div>
-        <div class="auth-logo-text">
-          <span class="top">Planning</span>
-          <span class="bottom">Center</span>
+      <div class="auth-logo-center">
+        <div class="auth-logo-badge">
+          <span class="logo-top">Planning</span>
+          <span class="logo-bottom">Center</span>
         </div>
       </div>
 
-      <!-- Title -->
       <h2 class="auth-title">Create Account</h2>
       <p class="auth-subtitle">Fill in your details to get started</p>
 
-      <!-- Error / Success -->
-      <div class="alert alert-error" id="authError"
-        style="display:none"></div>
-      <div class="alert alert-success" id="authSuccess"
-        style="display:none"></div>
+      <div class="alert alert-error" id="authError" style="display:none"></div>
+      <div class="alert alert-success" id="authSuccess" style="display:none"></div>
 
-      <!-- Register Form -->
       <form id="registerForm">
 
-        <!-- Name Row -->
         <div class="name-row">
           <div class="form-group">
-            <label for="regFirstName">First Name <span style="color:var(--danger)">*</span></label>
+            <label>First Name <span style="color:var(--danger)">*</span></label>
             <div class="input-with-icon">
-              <i>👤</i>
+              <i class="ri-user-line input-icon-left"></i>
               <input type="text" id="regFirstName"
                 placeholder="Enter your first name" required />
             </div>
           </div>
           <div class="form-group">
-            <label for="regLastName">Last Name <span style="color:var(--danger)">*</span></label>
+            <label>Last Name <span style="color:var(--danger)">*</span></label>
             <div class="input-with-icon">
-              <i>👤</i>
+              <i class="ri-user-line input-icon-left"></i>
               <input type="text" id="regLastName"
                 placeholder="Enter your last name" required />
             </div>
           </div>
         </div>
 
-        <!-- Email -->
         <div class="form-group">
-          <label for="regEmail">Email Address <span style="color:var(--danger)">*</span></label>
+          <label>Email Address <span style="color:var(--danger)">*</span></label>
           <div class="input-with-icon">
-            <i>✉️</i>
+            <i class="ri-mail-line input-icon-left"></i>
             <input type="email" id="regEmail"
               placeholder="Enter your email" required />
           </div>
         </div>
 
-        <!-- Phone -->
         <div class="form-group">
-          <label for="regPhone">Phone Number <span style="color:var(--danger)">*</span></label>
+          <label>Phone Number <span style="color:var(--danger)">*</span></label>
           <div class="input-with-icon">
-            <i>📞</i>
+            <i class="ri-phone-line input-icon-left"></i>
             <input type="tel" id="regPhone"
               placeholder="Enter your phone number" required />
           </div>
         </div>
 
-        <!-- Address -->
         <div class="form-group">
-          <label for="regAddress">Address <span style="color:var(--danger)">*</span></label>
+          <label>Address <span style="color:var(--danger)">*</span></label>
           <div class="input-with-icon">
-            <i>📍</i>
+            <i class="ri-map-pin-line input-icon-left"></i>
             <input type="text" id="regAddress"
               placeholder="Enter your address" required />
           </div>
         </div>
 
-        <!-- Password -->
         <div class="form-group">
-          <label for="regPassword">Password <span style="color:var(--danger)">*</span></label>
+          <label>Password <span style="color:var(--danger)">*</span></label>
           <div class="input-with-icon">
-            <i>🔒</i>
+            <i class="ri-lock-line input-icon-left"></i>
             <input type="password" id="regPassword"
               class="has-toggle"
               placeholder="Min. 8 characters" required />
             <button type="button" class="toggle-password"
-              onclick="togglePassword('regPassword','eyeIcon2')">
-              <span id="eyeIcon2">👁️</span>
+              onclick="togglePassword('regPassword','eye2')">
+              <i class="ri-eye-line" id="eye2"></i>
             </button>
           </div>
         </div>
 
-        <!-- Confirm Password -->
         <div class="form-group">
-          <label for="regConfirmPassword">Confirm Password <span style="color:var(--danger)">*</span></label>
+          <label>Confirm Password <span style="color:var(--danger)">*</span></label>
           <div class="input-with-icon">
-            <i>🔒</i>
+            <i class="ri-lock-line input-icon-left"></i>
             <input type="password" id="regConfirmPassword"
               class="has-toggle"
               placeholder="Re-enter your password" required />
             <button type="button" class="toggle-password"
-              onclick="togglePassword('regConfirmPassword','eyeIcon3')">
-              <span id="eyeIcon3">👁️</span>
+              onclick="togglePassword('regConfirmPassword','eye3')">
+              <i class="ri-eye-line" id="eye3"></i>
             </button>
           </div>
         </div>
 
-        <!-- Submit -->
         <button type="submit" class="btn btn-primary btn-full">
           Create Account
         </button>
-
       </form>
 
-      <!-- Footer -->
       <div class="auth-footer">
         Already have an account?
-        <a href="login.html">Sign In</a>
+        <a href="../HTML/2_login.html">Sign In</a>
       </div>
-
     </div>
   </div>
 
-  <script src="js/auth.js"></script>
+  <script src="../JS/1_navbar.js"></script>
+  <script src="../JS/3_auth.js"></script>
 </body>
 </html>

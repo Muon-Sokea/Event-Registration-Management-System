@@ -2,99 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Planning Center — My Dashboard</title>
-  <link rel="stylesheet" href="../css/global.css" />
-  <link rel="stylesheet" href="../css/navbar.css" />
-  <link rel="stylesheet" href="../css/dashboard.css" />
-  <style>
-    .event-list-item {
-      display: flex;
-      gap: 16px;
-      margin-bottom: 16px;
-      padding: 16px;
-    }
-    .event-list-img {
-      position: relative;
-      width: 160px;
-      min-width: 160px;
-      height: 120px;
-      border-radius: var(--border-radius);
-      overflow: hidden;
-      background: #ddd;
-    }
-    .event-list-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .price-tag {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 4px;
-    }
-    .event-list-info { flex: 1; }
-    .event-list-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
-    }
-    .ticket-id {
-      font-size: 12px;
-      color: var(--text-light);
-    }
-    .event-list-info h3 {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    .event-list-actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-      flex-wrap: wrap;
-    }
-    .tab-filter {
-      display: flex;
-      gap: 0;
-      border-bottom: 2px solid var(--border);
-      margin-bottom: 20px;
-    }
-    .tab-filter-btn {
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: 500;
-      font-family: var(--font);
-      background: none;
-      border: none;
-      color: var(--text-light);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -2px;
-      transition: color 0.15s;
-    }
-    .tab-filter-btn.active {
-      color: var(--primary);
-      border-bottom-color: var(--primary);
-    }
-    @media (max-width: 768px) {
-      .event-list-item { flex-direction: column; }
-      .event-list-img { width: 100%; min-width: unset; height: 160px; }
-    }
-  </style>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../CSS/1_global.css" />
+  <link rel="stylesheet" href="../CSS/2_navbar.css" />
+  <link rel="stylesheet" href="../CSS/6_dashboard.css" />
 </head>
 <body>
 
-  <!-- ── Navbar ── -->
   <nav class="navbar">
-    <a class="nav-logo" href="../index.html">
+    <a class="nav-logo" href="../HTML/1_index.html">
       <span class="logo-top">Planning</span>
       <span class="logo-bottom">Center</span>
     </a>
@@ -102,56 +20,61 @@
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="navLinks">
-      <button class="btn btn-outline" data-page="index"
-        onclick="location.href='../index.html'">Home</button>
-      <button class="btn btn-primary" data-page="dashboard">Dashboard</button>
-      <button class="btn btn-outline" onclick="logout()">🚪 Logout</button>
+      <button class="btn btn-outline"
+        onclick="location.href='../HTML/1_index.html'">
+        <i class="ri-home-line"></i> Home
+      </button>
+      <button class="btn btn-primary">
+        <i class="ri-dashboard-line"></i> Dashboard
+      </button>
+      <button class="btn btn-outline" onclick="logout()">
+        <i class="ri-logout-box-r-line"></i> Logout
+      </button>
     </div>
   </nav>
 
-  <!-- ── Dashboard ── -->
   <div class="dashboard-page">
-
-    <!-- Header -->
     <div class="dashboard-header">
       <div>
         <h1>My Dashboard</h1>
         <p>Manage your event registrations and tickets</p>
       </div>
-      <button class="btn btn-outline"
-        onclick="location.href='../pages/account-settings.html'">
-        ⚙️ Profile Settings
+      <button class="btn btn-outline">
+        <i class="ri-settings-3-line"></i> Profile Settings
       </button>
     </div>
 
     <div class="dashboard-body">
-
-      <!-- Stat Cards -->
       <div class="stats-cards">
         <div class="stat-card">
           <div class="stat-card-info">
             <div class="label">Total Events</div>
             <div class="value" id="statTotalEvents">0</div>
           </div>
-          <div class="stat-card-icon">📋</div>
+          <div class="stat-card-icon">
+            <i class="ri-file-list-3-line"></i>
+          </div>
         </div>
         <div class="stat-card">
           <div class="stat-card-info">
             <div class="label">Upcoming Events</div>
             <div class="value" id="statUpcoming">0</div>
           </div>
-          <div class="stat-card-icon">✅</div>
+          <div class="stat-card-icon">
+            <i class="ri-checkbox-circle-line"></i>
+          </div>
         </div>
         <div class="stat-card">
           <div class="stat-card-info">
             <div class="label">Total Spent</div>
             <div class="value" id="statTotalSpent">$0</div>
           </div>
-          <div class="stat-card-icon">⬇️</div>
+          <div class="stat-card-icon">
+            <i class="ri-download-line"></i>
+          </div>
         </div>
       </div>
 
-      <!-- Event Tabs -->
       <div class="tab-filter">
         <button class="tab-filter-btn active"
           onclick="switchEventTab('upcoming', this)">
@@ -163,25 +86,19 @@
         </button>
       </div>
 
-      <!-- Events List -->
       <div id="myEventsGrid"></div>
-
     </div>
   </div>
 
-  <script src="../js/navbar.js"></script>
-  <script src="../js/dashboard.js"></script>
+  <script src="../JS/1_navbar.js"></script>
+  <script src="../JS/4_dashboard.js"></script>
   <script>
-    // Tab switch for upcoming/past
     function switchEventTab(filter, btn) {
-      document.querySelectorAll(".tab-filter-btn").forEach((b) =>
-        b.classList.remove("active")
-      );
+      document.querySelectorAll(".tab-filter-btn")
+        .forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       renderMyEvents(filter);
     }
-
-    // Protect page
     requireAuth();
     requireRole(["Attendee"]);
   </script>

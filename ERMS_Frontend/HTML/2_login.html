@@ -2,116 +2,109 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Planning Center — Sign In</title>
-  <link rel="stylesheet" href="css/global.css" />
-  <link rel="stylesheet" href="css/auth.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../CSS/1_global.css" />
+  <link rel="stylesheet" href="../CSS/2_navbar.css" />
+  <link rel="stylesheet" href="../CSS/5_auth.css" />
 </head>
 <body>
+
+  <nav class="navbar">
+    <a class="nav-logo" href="../HTML/1_index.html">
+      <span class="logo-top">Planning</span>
+      <span class="logo-bottom">Center</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <button class="btn btn-outline"
+        onclick="location.href='../HTML/1_index.html'">
+        <i class="ri-home-line"></i> Home
+      </button>
+      <button class="btn btn-primary">
+        <i class="ri-login-box-line"></i> Sign in
+      </button>
+      <button class="btn btn-outline"
+        onclick="location.href='../HTML/3_register.html'">
+        <i class="ri-user-add-line"></i> Sign up
+      </button>
+    </div>
+  </nav>
+
+  <div class="auth-hero">
+    <h2>Discover and Manage Events</h2>
+    <p>Register, Organize, review, and track your event participation.</p>
+  </div>
 
   <div class="auth-page">
     <div class="auth-card">
 
-      <!-- Logo -->
-      <div class="auth-logo">
-        <div class="auth-logo-icon">📅</div>
-        <div class="auth-logo-text">
-          <span class="top">Planning</span>
-          <span class="bottom">Center</span>
+      <div class="auth-logo-center">
+        <div class="auth-logo-badge">
+          <span class="logo-top">Planning</span>
+          <span class="logo-bottom">Center</span>
         </div>
       </div>
 
-      <!-- Title -->
       <h2 class="auth-title">Welcome Back</h2>
       <p class="auth-subtitle">Sign in to your Planning Center account</p>
 
-      <!-- Error / Success -->
-      <div class="alert alert-error" id="authError"
-        style="display:none"></div>
-      <div class="alert alert-success" id="authSuccess"
-        style="display:none"></div>
+      <div class="alert alert-error" id="authError" style="display:none"></div>
+      <div class="alert alert-success" id="authSuccess" style="display:none"></div>
 
-      <!-- Role Selector -->
-      <div class="form-group">
-        <label>Select Your Role</label>
-        <div class="role-pills">
-          <button class="role-pill active" data-role="Attendee"
-            onclick="selectRole('Attendee')">Attendee</button>
-          <button class="role-pill" data-role="Organizer"
-            onclick="selectRole('Organizer')">Organizer</button>
-          <button class="role-pill" data-role="Admin"
-            onclick="selectRole('Admin')">Admin</button>
-          <button class="role-pill" data-role="Supervisor"
-            onclick="selectRole('Supervisor')">Administrator</button>
-        </div>
-      </div>
-
-      <!-- Login Form -->
       <form id="loginForm">
 
-        <!-- Email -->
         <div class="form-group">
-          <label for="loginEmail">Email Address <span style="color:var(--danger)">*</span></label>
+          <label>Email Address <span style="color:var(--danger)">*</span></label>
           <div class="input-with-icon">
-            <i>✉️</i>
+            <i class="ri-mail-line input-icon-left"></i>
             <input type="email" id="loginEmail"
               placeholder="Enter your email" required />
           </div>
         </div>
 
-        <!-- Password -->
         <div class="form-group">
-          <label for="loginPassword">Password <span style="color:var(--danger)">*</span></label>
+          <label>Password <span style="color:var(--danger)">*</span></label>
           <div class="input-with-icon">
-            <i>🔒</i>
+            <i class="ri-lock-line input-icon-left"></i>
             <input type="password" id="loginPassword"
               class="has-toggle"
               placeholder="Enter your password" required />
             <button type="button" class="toggle-password"
-              onclick="togglePassword('loginPassword', 'eyeIcon1')">
-              <span id="eyeIcon1">👁️</span>
+              onclick="togglePassword('loginPassword','eye1')">
+              <i class="ri-eye-line" id="eye1"></i>
             </button>
           </div>
         </div>
 
-        <!-- Remember me + Forgot -->
-        <div style="display:flex;align-items:center;
-          justify-content:space-between;margin-bottom:16px">
-          <label style="display:flex;align-items:center;
-            gap:6px;font-size:13px;cursor:pointer">
+        <div class="auth-row">
+          <label class="remember-label">
             <input type="checkbox" id="rememberMe" />
             Remember me
           </label>
-          <div class="forgot-link">
-            <a href="#">Forgot password?</a>
-          </div>
+          <a class="forgot-link" href="#">Forgot password?</a>
         </div>
 
-        <!-- Info box -->
-        <div style="background:var(--bg-light);border:1px solid
-          var(--border);border-radius:var(--border-radius);
-          padding:10px 14px;font-size:13px;color:var(--text-medium);
-          margin-bottom:16px;line-height:1.6">
-          Select your role above to access the corresponding dashboard.
-          Failed login attempts will trigger error messages.
-        </div>
-
-        <!-- Submit -->
-        <button type="submit" class="btn btn-primary btn-full">
-          Login
-        </button>
-
+        <button type="submit" class="btn btn-primary btn-full"
+          style="margin-top:8px">Login</button>
       </form>
 
-      <!-- Footer -->
-      <div class="auth-footer">
-        Don't have an account?
-        <a href="register.html">Sign Up</a>
+      <div class="auth-info-box">
+        Enter your email and password to access your dashboard.
+        Failed login attempts will trigger error messages.
       </div>
 
+      <div class="auth-footer">
+        Don't have an account?
+        <a href="../HTML/3_register.html">Sign Up</a>
+      </div>
     </div>
   </div>
 
-  <script src="js/auth.js"></script>
+  <script src="../JS/1_navbar.js"></script>
+  <script src="../JS/3_auth.js"></script>
 </body>
 </html>

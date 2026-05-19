@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Planning Center — Discover Events</title>
-  <link rel="stylesheet" href="css/global.css" />
-  <link rel="stylesheet" href="css/navbar.css" />
-  <link rel="stylesheet" href="css/hero.css" />
-  <link rel="stylesheet" href="css/events.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../CSS/1_global.css" />
+  <link rel="stylesheet" href="../CSS/2_navbar.css" />
+  <link rel="stylesheet" href="../CSS/3_hero.css" />
+  <link rel="stylesheet" href="../CSS/4_events.css" />
 </head>
 <body>
 
-  <!-- ── Navbar ── -->
+  <!-- Navbar -->
   <nav class="navbar">
-    <a class="nav-logo" href="index.html">
+    <a class="nav-logo" href="../HTML/1_index.html">
       <span class="logo-top">Planning</span>
       <span class="logo-bottom">Center</span>
     </a>
@@ -21,14 +22,19 @@
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="navLinks">
-      <button class="btn btn-primary" data-page="index">Home</button>
-      <button class="btn btn-outline" data-page="dashboard"
-        onclick="goToDashboard()">Dashboard</button>
-      <button class="btn btn-outline" onclick="logout()">🚪 Logout</button>
+      <button class="btn btn-primary">
+        <i class="ri-home-line"></i> Home
+      </button>
+      <button class="btn btn-outline" onclick="goToDashboard()">
+        <i class="ri-dashboard-line"></i> Dashboard
+      </button>
+      <button class="btn btn-outline" onclick="logout()">
+        <i class="ri-logout-box-r-line"></i> Logout
+      </button>
     </div>
   </nav>
 
-  <!-- ── Hero ── -->
+  <!-- Hero -->
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -36,35 +42,37 @@
       <p>Join thousands of attendees at conferences, workshops, and networking events</p>
       <div class="search-bar">
         <input type="text" id="searchInput" placeholder="Search events..." />
-        <button class="search-btn" onclick="handleSearch()">🔍</button>
+        <button class="search-btn" onclick="handleSearch()">
+          <i class="ri-search-line"></i>
+        </button>
       </div>
     </div>
   </section>
 
-  <!-- ── Stats Bar ── -->
+  <!-- Stats Bar -->
   <section class="stats-bar">
     <div class="stat-item">
-      <div class="stat-icon">📅</div>
+      <div class="stat-icon"><i class="ri-calendar-check-line"></i></div>
       <div class="stat-number">150+</div>
       <div class="stat-label">Upcoming Events</div>
     </div>
     <div class="stat-item">
-      <div class="stat-icon">👥</div>
+      <div class="stat-icon"><i class="ri-group-line"></i></div>
       <div class="stat-number">50K+</div>
       <div class="stat-label">Total Attendees</div>
     </div>
     <div class="stat-item">
-      <div class="stat-icon">📊</div>
+      <div class="stat-icon"><i class="ri-bar-chart-line"></i></div>
       <div class="stat-number">90%</div>
       <div class="stat-label">Satisfaction Rate</div>
     </div>
   </section>
 
-  <!-- ── Event Catalog ── -->
+  <!-- Events Catalog -->
   <main class="events-section">
     <div class="filter-row">
-      <span>🔽</span>
-      <span>Filter by Category</span>
+      <i class="ri-filter-3-line" style="color:var(--text-medium)"></i>
+      <span style="font-weight:500">Filter by Category</span>
       <button class="filter-pill active" data-category="All"
         onclick="filterByCategory('All')">All</button>
       <button class="filter-pill" data-category="Technology"
@@ -79,13 +87,15 @@
         onclick="filterByCategory('Business')">Business</button>
       <button class="filter-pill" data-category="Entertainment"
         onclick="filterByCategory('Entertainment')">Entertainment</button>
+      <button class="filter-pill" data-category="Networking"
+        onclick="filterByCategory('Networking')">Networking</button>
     </div>
     <div class="events-grid" id="eventsGrid">
       <div class="spinner"></div>
     </div>
   </main>
 
-  <script src="js/navbar.js"></script>
-  <script src="js/events.js"></script>
+  <script src="../JS/1_navbar.js"></script>
+  <script src="../JS/2_events.js"></script>
 </body>
 </html>

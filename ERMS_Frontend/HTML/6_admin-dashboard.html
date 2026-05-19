@@ -2,233 +2,265 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Planning Center — Admin Dashboard</title>
-  <link rel="stylesheet" href="../css/global.css" />
-  <link rel="stylesheet" href="../css/navbar.css" />
-  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../CSS/1_global.css" />
+  <link rel="stylesheet" href="../CSS/2_navbar.css" />
+  <link rel="stylesheet" href="../CSS/6_dashboard.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 </head>
 <body>
 
-  <!-- ── Navbar ── -->
   <nav class="navbar">
-    <a class="nav-logo" href="../index.html">
+    <a class="nav-logo" href="../HTML/1_index.html">
       <span class="logo-top">Planning</span>
       <span class="logo-bottom">Center</span>
     </a>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <button class="hamburger" id="hamburger">
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="navLinks">
       <button class="btn btn-outline"
-        onclick="location.href='../index.html'">Home</button>
-      <button class="btn btn-primary">Dashboard</button>
-      <button class="btn btn-outline" onclick="logout()">🚪 Logout</button>
+        onclick="location.href='../HTML/1_index.html'">
+        <i class="ri-home-line"></i> Home
+      </button>
+      <button class="btn btn-primary">
+        <i class="ri-dashboard-line"></i> Dashboard
+      </button>
+      <button class="btn btn-outline" onclick="logout()">
+        <i class="ri-logout-box-r-line"></i> Logout
+      </button>
     </div>
   </nav>
 
   <div class="dashboard-page">
-
-    <!-- Header -->
     <div class="dashboard-header">
       <div>
-        <h1>Administrator Dashboard</h1>
-        <p>Manage users, events, and registrations</p>
+        <h1>Admin Dashboard</h1>
+        <p>Monitor platform performance and manage all activities</p>
       </div>
     </div>
 
     <div class="dashboard-body">
-
-      <!-- Stat Cards -->
       <div class="stats-cards">
         <div class="stat-card">
           <div class="stat-card-info">
-            <div class="label">Total Users</div>
-            <div class="value">1,284</div>
+            <div class="label">Total Events</div>
+            <div class="value">200</div>
+            <div class="trend-up">+12% from last month</div>
           </div>
-          <div class="stat-card-icon">👥</div>
+          <div class="stat-card-icon">
+            <i class="ri-file-list-3-line"></i>
+          </div>
         </div>
         <div class="stat-card">
           <div class="stat-card-info">
-            <div class="label">Total Events</div>
-            <div class="value">48</div>
+            <div class="label">Total Users</div>
+            <div class="value">15,890</div>
+            <div class="trend-up">+8% from last month</div>
           </div>
-          <div class="stat-card-icon">📋</div>
+          <div class="stat-card-icon">
+            <i class="ri-group-line"></i>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-info">
+            <div class="label">Total Revenue (MTD)</div>
+            <div class="value">$1,000,000</div>
+            <div class="trend-up">+20% from last month</div>
+          </div>
+          <div class="stat-card-icon">
+            <i class="ri-money-dollar-circle-line"></i>
+          </div>
         </div>
         <div class="stat-card">
           <div class="stat-card-info">
             <div class="label">Registrations</div>
-            <div class="value">9,430</div>
+            <div class="value">3,500</div>
+            <div class="trend-up">+15% from last month</div>
           </div>
-          <div class="stat-card-icon">✅</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card-info">
-            <div class="label">Revenue</div>
-            <div class="value">$2.4M</div>
+          <div class="stat-card-icon">
+            <i class="ri-bar-chart-line"></i>
           </div>
-          <div class="stat-card-icon">💰</div>
         </div>
       </div>
 
-      <!-- Tabs -->
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="tab-overview"
-          onclick="switchTab('tab-overview')">📊 Overview</button>
-        <button class="tab-btn" data-tab="tab-users"
-          onclick="switchTab('tab-users')">👥 All Users</button>
-        <button class="tab-btn" data-tab="tab-events"
-          onclick="switchTab('tab-events')">📋 All Events</button>
-        <button class="tab-btn" data-tab="tab-registrations"
-          onclick="switchTab('tab-registrations')">🎫 Registrations</button>
+      <div class="charts-row">
+        <div class="chart-card">
+          <h3>Monthly Revenue</h3>
+          <canvas id="revenueChart" height="180"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Events by Category</h3>
+          <canvas id="categoryChart" height="180"></canvas>
+        </div>
       </div>
 
-      <!-- Tab: Overview -->
-      <div class="tab-content active" id="tab-overview">
-        <div class="section-title">Registration Overview</div>
+      <div class="card" style="padding:20px;margin-bottom:20px">
+        <div style="display:flex;align-items:center;
+          justify-content:space-between;margin-bottom:14px">
+          <div class="section-title" style="margin:0">Recent Registrations</div>
+          <div style="display:flex;align-items:center;gap:8px;
+            border:1px solid var(--border);border-radius:var(--border-radius);
+            padding:7px 12px;background:var(--bg-white)">
+            <i class="ri-search-line" style="color:var(--text-light)"></i>
+            <input type="text" placeholder="Search registrations..."
+              style="border:none;outline:none;font-size:13px;
+                font-family:var(--font);width:180px"
+              oninput="filterRegs(this.value)" />
+          </div>
+        </div>
         <div style="overflow-x:auto">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Attendee</th>
-                <th>Email</th>
-                <th>Event</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Status</th>
+                <th>ATTENDEE</th><th>EVENT</th>
+                <th>DATE</th><th>AMOUNT</th><th>STATUS</th>
               </tr>
             </thead>
-            <tbody id="attendeesTableBody">
-              <!-- Populated by dashboard.js -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Tab: Users -->
-      <div class="tab-content" id="tab-users">
-        <div class="section-title">All Users</div>
-        <div style="overflow-x:auto">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Role</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
+            <tbody id="regTableBody">
               <tr>
                 <td><div style="display:flex;align-items:center;gap:10px">
-                  <div class="avatar-circle">M</div>Muon Sokea
+                  <div class="avatar-circle"
+                    style="background:#dbeafe;color:#1d4ed8">M</div>
+                  Muon Sokea
                 </div></td>
-                <td>muonsokea@gmail.com</td>
-                <td>093 513 252</td>
-                <td><span class="badge badge-confirmed">Admin</span></td>
-                <td><div class="action-btns">
-                  <button class="btn btn-outline btn-sm">✏️ Edit</button>
-                  <button class="btn btn-danger btn-sm">🗑️ Delete</button>
-                </div></td>
-              </tr>
-              <tr>
-                <td><div style="display:flex;align-items:center;gap:10px">
-                  <div class="avatar-circle">S</div>San Sotheayuth
-                </div></td>
-                <td>attendee@example.com</td>
-                <td>093 759 005</td>
-                <td><span class="badge badge-available">Attendee</span></td>
-                <td><div class="action-btns">
-                  <button class="btn btn-outline btn-sm">✏️ Edit</button>
-                  <button class="btn btn-danger btn-sm">🗑️ Delete</button>
-                </div></td>
-              </tr>
-              <tr>
-                <td><div style="display:flex;align-items:center;gap:10px">
-                  <div class="avatar-circle">P</div>Proeung Sivly
-                </div></td>
-                <td>organizer@example.com</td>
-                <td>093 759 006</td>
-                <td><span class="badge badge-pending">Organizer</span></td>
-                <td><div class="action-btns">
-                  <button class="btn btn-outline btn-sm">✏️ Edit</button>
-                  <button class="btn btn-danger btn-sm">🗑️ Delete</button>
-                </div></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Tab: All Events -->
-      <div class="tab-content" id="tab-events">
-        <div class="section-title">All Events</div>
-        <div style="overflow-x:auto">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Event Title</th>
-                <th>Date</th>
-                <th>Organizer</th>
-                <th>Registered / Capacity</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="managedEventsBody">
-              <!-- Populated by dashboard.js -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Tab: Registrations -->
-      <div class="tab-content" id="tab-registrations">
-        <div class="section-title">All Registrations</div>
-        <div style="overflow-x:auto">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Ticket ID</th>
-                <th>Attendee</th>
-                <th>Event</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>TKT-001-2026</td>
-                <td>Muon Sokea</td>
                 <td>Tech Innovation Summit 2026</td>
-                <td>March 13, 2026</td>
+                <td><i class="ri-time-line"></i> March 13, 2026</td>
                 <td>$300</td>
-                <td><span class="badge badge-confirmed">Confirmed</span></td>
+                <td><span class="badge badge-confirmed">
+                  <i class="ri-checkbox-circle-line"></i> Confirmed
+                </span></td>
               </tr>
               <tr>
-                <td>TKT-002-2026</td>
-                <td>San Sotheayuth</td>
-                <td>Pre-Event Planning</td>
-                <td>March 20, 2026</td>
+                <td><div style="display:flex;align-items:center;gap:10px">
+                  <div class="avatar-circle"
+                    style="background:#fce7f3;color:#be185d">P</div>
+                  Proeung Sivly
+                </div></td>
+                <td>Business Leadership Conference</td>
+                <td><i class="ri-time-line"></i> March 13, 2026</td>
                 <td>$300</td>
-                <td><span class="badge badge-confirmed">Confirmed</span></td>
+                <td><span class="badge badge-pending">
+                  <i class="ri-time-line"></i> Pending
+                </span></td>
+              </tr>
+              <tr>
+                <td><div style="display:flex;align-items:center;gap:10px">
+                  <div class="avatar-circle"
+                    style="background:#dcfce7;color:#15803d">S</div>
+                  San Sotheayuth
+                </div></td>
+                <td>Digital Marketing Workshop</td>
+                <td><i class="ri-time-line"></i> March 13, 2026</td>
+                <td>$300</td>
+                <td><span class="badge badge-confirmed">
+                  <i class="ri-checkbox-circle-line"></i> Confirmed
+                </span></td>
+              </tr>
+              <tr>
+                <td><div style="display:flex;align-items:center;gap:10px">
+                  <div class="avatar-circle"
+                    style="background:#fef9c3;color:#a16207">L</div>
+                  Lang Socheat
+                </div></td>
+                <td>Networking & Innovation Forum</td>
+                <td><i class="ri-time-line"></i> March 13, 2026</td>
+                <td>$300</td>
+                <td><span class="badge badge-cancelled">
+                  <i class="ri-close-circle-line"></i> Cancelled
+                </span></td>
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <div class="quick-action-card">
+          <div class="qa-icon">
+            <i class="ri-group-line"
+              style="font-size:28px;color:#4A90D9"></i>
+          </div>
+          <div class="qa-title">Manage Users</div>
+          <div class="qa-desc">View and manage all platform users</div>
+        </div>
+        <div class="quick-action-card">
+          <div class="qa-icon">
+            <i class="ri-calendar-event-line"
+              style="font-size:28px;color:#28a745"></i>
+          </div>
+          <div class="qa-title">Manage Events</div>
+          <div class="qa-desc">Approve, edit, or remove events</div>
+        </div>
+        <div class="quick-action-card">
+          <div class="qa-icon">
+            <i class="ri-money-dollar-circle-line"
+              style="font-size:28px;color:#9b59b6"></i>
+          </div>
+          <div class="qa-title">Financial Reports</div>
+          <div class="qa-desc">View detailed revenue reports</div>
         </div>
       </div>
 
     </div>
   </div>
 
-  <script src="../js/navbar.js"></script>
-  <script src="../js/dashboard.js"></script>
+  <script src="../JS/1_navbar.js"></script>
+  <script src="../JS/4_dashboard.js"></script>
   <script>
     requireAuth();
     requireRole(["Admin"]);
-    switchTab("tab-overview");
+
+    new Chart(document.getElementById("revenueChart"), {
+      type: "line",
+      data: {
+        labels: ["Oct","Nov","Dec","Jan","Feb","Mar"],
+        datasets: [{
+          data: [45000,52000,48000,60000,55000,72000],
+          borderColor: "#4A90D9",
+          backgroundColor: "rgba(74,144,217,0.08)",
+          tension: 0.4, fill: true,
+          pointBackgroundColor: "#4A90D9",
+          pointRadius: 4,
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: "#f0f0f0" } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("categoryChart"), {
+      type: "bar",
+      data: {
+        labels: ["Technology","Business","Workshop","Entertainment","Healthcare"],
+        datasets: [{
+          data: [45,31,28,32,15],
+          backgroundColor: "#4A90D9",
+          borderRadius: 4,
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, grid: { color: "#f0f0f0" } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    function filterRegs(query) {
+      document.querySelectorAll("#regTableBody tr").forEach(row => {
+        row.style.display =
+          row.textContent.toLowerCase().includes(query.toLowerCase())
+          ? "" : "none";
+      });
+    }
   </script>
 </body>
 </html>

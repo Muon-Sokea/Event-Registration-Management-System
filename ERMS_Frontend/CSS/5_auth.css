@@ -1,5 +1,23 @@
+/* ── Orange Hero Banner ── */
+.auth-hero {
+  background: #FDEBD0;
+  padding: 28px 40px;
+  border-bottom: 1px solid var(--primary-border);
+}
+.auth-hero h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+.auth-hero p {
+  font-size: 14px;
+  color: var(--text-medium);
+}
+
+/* ── Auth page wrapper ── */
 .auth-page {
-  min-height: 100vh;
+  min-height: calc(100vh - 180px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,171 +25,169 @@
   padding: 32px 16px;
 }
 
+/* ── Auth card ── */
 .auth-card {
   background: var(--bg-white);
   border-radius: var(--border-radius-lg);
   border: 1px solid var(--border);
   padding: 2rem 2.25rem;
   width: 100%;
-  max-width: 440px;
+  max-width: 420px;
+  box-shadow: var(--shadow-sm);
 }
 
-.auth-logo {
+/* ── Center logo badge ── */
+.auth-logo-center {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 1.75rem;
-}
-
-.auth-logo-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--border-radius);
-  background: var(--primary);
-  display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: 20px;
+  margin-bottom: 1rem;
 }
 
-.auth-logo-text {
+.auth-logo-badge {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #1B3A5C;
   display: flex;
   flex-direction: column;
-  line-height: 1.15;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.1;
 }
 
-.auth-logo-text .top {
-  font-size: 14px;
+.auth-logo-badge .logo-top {
+  font-size: 9px;
   font-weight: 700;
-  color: var(--primary);
+  color: #ffffff;
   font-style: italic;
   font-family: Georgia, serif;
 }
 
-.auth-logo-text .bottom {
-  font-size: 17px;
+.auth-logo-badge .logo-bottom {
+  font-size: 11px;
   font-weight: 800;
-  color: var(--primary);
+  color: #ffffff;
   font-style: italic;
   font-family: Georgia, serif;
 }
 
+/* ── Title & subtitle ── */
 .auth-title {
   font-size: 20px;
   font-weight: 700;
   color: var(--text-dark);
+  text-align: center;
   margin-bottom: 4px;
 }
 
 .auth-subtitle {
   font-size: 14px;
   color: var(--text-light);
+  text-align: center;
   margin-bottom: 1.5rem;
 }
 
-.role-pills {
+/* ── Input with icon ── */
+.input-with-icon {
+  position: relative;
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 4px;
+  align-items: center;
 }
 
-.role-pill {
-  flex: 1;
-  padding: 8px 6px;
-  text-align: center;
-  font-size: 13px;
-  font-weight: 500;
+.input-icon-left {
+  position: absolute;
+  left: 12px;
+  font-size: 15px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 11px 14px 11px 38px;
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  font-size: 14px;
   font-family: var(--font);
-  border: 1.5px solid var(--border);
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  color: var(--text-medium);
+  color: var(--text-dark);
   background: var(--bg-white);
-  transition: all 0.15s;
-  white-space: nowrap;
+  outline: none;
+  transition: border 0.2s;
+}
+.input-with-icon input:focus { border-color: var(--primary); }
+.input-with-icon input.has-toggle { padding-right: 42px; }
+
+/* ── Toggle password ── */
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  padding: 0;
 }
 
-.role-pill:hover {
-  border-color: var(--primary);
+/* ── Remember + forgot row ── */
+.auth-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.remember-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-medium);
+  cursor: pointer;
+}
+
+.forgot-link {
+  font-size: 13px;
   color: var(--primary);
+  text-decoration: none;
+}
+.forgot-link:hover { text-decoration: underline; }
+
+/* ── Info box ── */
+.auth-info-box {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius);
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--text-medium);
+  margin-top: 14px;
+  line-height: 1.6;
 }
 
-.role-pill.active {
-  border-color: var(--primary);
-  background: var(--primary-light);
-  color: var(--primary);
-}
-
+/* ── Footer link ── */
 .auth-footer {
   text-align: center;
   font-size: 13px;
   color: var(--text-medium);
-  margin-top: 1.25rem;
+  margin-top: 1rem;
 }
-
 .auth-footer a {
   color: var(--primary);
   font-weight: 600;
   text-decoration: none;
 }
-
 .auth-footer a:hover { text-decoration: underline; }
 
-.forgot-link {
-  text-align: right;
-  margin-top: -8px;
-  margin-bottom: 14px;
-}
-
-.forgot-link a {
-  font-size: 12px;
-  color: var(--primary);
-  text-decoration: none;
-}
-
-.name-row {
-  display: flex;
-  gap: 12px;
-}
-
+/* ── Name row ── */
+.name-row { display: flex; gap: 12px; }
 .name-row .form-group { flex: 1; }
 
-.input-with-icon {
-  position: relative;
-}
-
-.input-with-icon i {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-light);
-  font-size: 16px;
-  pointer-events: none;
-}
-
-.input-with-icon input {
-  padding-left: 38px;
-}
-
-.toggle-password {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text-light);
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-}
-
-.input-with-icon input.has-toggle { padding-right: 40px; }
-
 @media (max-width: 480px) {
-  .auth-card { padding: 1.5rem; }
-  .name-row { flex-direction: column; gap: 0; }
+  .auth-card    { padding: 1.5rem; }
+  .auth-hero    { padding: 20px; }
+  .auth-hero h2 { font-size: 18px; }
+  .name-row     { flex-direction: column; gap: 0; }
 }

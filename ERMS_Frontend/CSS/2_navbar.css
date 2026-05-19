@@ -61,25 +61,20 @@
 
 @media (max-width: 768px) {
   .navbar { padding: 12px 20px; }
-
   .hamburger { display: flex; }
-
   .nav-links {
     display: none;
     flex-direction: column;
     width: 100%;
     position: absolute;
     top: 62px;
-    left: 0;
-    right: 0;
+    left: 0; right: 0;
     background: var(--bg-white);
     border-bottom: 1px solid var(--border);
     padding: 16px 20px;
     gap: 10px;
     z-index: 99;
   }
-
   .nav-links.open { display: flex; }
-
   .nav-links .btn { width: 100%; justify-content: center; }
 }

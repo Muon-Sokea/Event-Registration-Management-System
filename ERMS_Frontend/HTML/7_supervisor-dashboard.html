@@ -2,119 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Planning Center — Supervisor Dashboard</title>
-  <link rel="stylesheet" href="../css/global.css" />
-  <link rel="stylesheet" href="../css/navbar.css" />
-  <link rel="stylesheet" href="../css/dashboard.css" />
-  <style>
-    .health-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-    .health-card {
-      background: var(--bg-white);
-      border: 1px solid var(--border);
-      border-radius: var(--border-radius-lg);
-      padding: 16px;
-    }
-    .health-label { font-size: 13px; color: var(--text-light); margin-bottom: 6px; }
-    .health-value { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-    .health-bar {
-      height: 6px;
-      background: #eee;
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .health-fill { height: 100%; border-radius: 3px; }
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .toggle-info .t-label { font-size: 14px; font-weight: 500; }
-    .toggle-info .t-sub   { font-size: 12px; color: var(--text-light); }
-    .toggle {
-      position: relative;
-      width: 44px; height: 24px;
-      background: var(--primary);
-      border-radius: 12px;
-      cursor: pointer;
-      transition: background 0.2s;
-      border: none;
-    }
-    .toggle::after {
-      content: "";
-      position: absolute;
-      width: 18px; height: 18px;
-      background: #fff;
-      border-radius: 50%;
-      top: 3px; left: 3px;
-      transition: transform 0.2s;
-    }
-    .toggle.off { background: #ccc; }
-    .toggle.off::after { transform: translateX(0); }
-    .toggle.on::after  { transform: translateX(20px); }
-    .service-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 14px;
-    }
-    .service-ok { color: var(--success); font-weight: 500; }
-  </style>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../CSS/1_global.css" />
+  <link rel="stylesheet" href="../CSS/2_navbar.css" />
+  <link rel="stylesheet" href="../CSS/6_dashboard.css" />
 </head>
 <body>
 
-  <!-- ── Navbar ── -->
   <nav class="navbar">
-    <a class="nav-logo" href="../index.html">
+    <a class="nav-logo" href="../HTML/1_index.html">
       <span class="logo-top">Planning</span>
       <span class="logo-bottom">Center</span>
     </a>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <button class="hamburger" id="hamburger">
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="navLinks">
       <button class="btn btn-outline"
-        onclick="location.href='../index.html'">Home</button>
-      <button class="btn btn-primary">Dashboard</button>
-      <button class="btn btn-outline" onclick="logout()">🚪 Logout</button>
+        onclick="location.href='../HTML/1_index.html'">
+        <i class="ri-home-line"></i> Home
+      </button>
+      <button class="btn btn-primary">
+        <i class="ri-dashboard-line"></i> Dashboard
+      </button>
+      <button class="btn btn-outline" onclick="logout()">
+        <i class="ri-logout-box-r-line"></i> Logout
+      </button>
     </div>
   </nav>
 
   <div class="dashboard-page">
-
     <div class="dashboard-header">
       <div>
         <h1>System Administrator Dashboard</h1>
-        <p>Complete system control and monitoring — Manage all aspects of the platform</p>
+        <p>Complete system control and monitoring</p>
       </div>
     </div>
 
     <div class="dashboard-body">
 
-      <!-- Tabs -->
       <div class="tabs">
         <button class="tab-btn active" data-tab="tab-overview"
-          onclick="switchTab('tab-overview')">📊 Overview</button>
+          onclick="switchTab('tab-overview')">
+          <i class="ri-bar-chart-line"></i> Overview
+        </button>
         <button class="tab-btn" data-tab="tab-users"
-          onclick="switchTab('tab-users')">👥 All Users</button>
+          onclick="switchTab('tab-users')">
+          <i class="ri-group-line"></i> All Users
+        </button>
         <button class="tab-btn" data-tab="tab-settings"
-          onclick="switchTab('tab-settings')">⚙️ System Settings</button>
+          onclick="switchTab('tab-settings')">
+          <i class="ri-settings-3-line"></i> System Settings
+        </button>
         <button class="tab-btn" data-tab="tab-audit"
-          onclick="switchTab('tab-audit')">📄 Audit Logs</button>
+          onclick="switchTab('tab-audit')">
+          <i class="ri-file-text-line"></i> Audit Logs
+        </button>
         <button class="tab-btn" data-tab="tab-health"
-          onclick="switchTab('tab-health')">🖥️ System Health</button>
+          onclick="switchTab('tab-health')">
+          <i class="ri-computer-line"></i> System Health
+        </button>
       </div>
 
-      <!-- Tab: Overview -->
+      <!-- Overview Tab -->
       <div class="tab-content active" id="tab-overview">
         <div class="stats-cards">
           <div class="stat-card">
@@ -122,28 +74,37 @@
               <div class="label">Total Users</div>
               <div class="value">1,284</div>
             </div>
-            <div class="stat-card-icon">👥</div>
+            <div class="stat-card-icon">
+              <i class="ri-group-line"></i>
+            </div>
           </div>
           <div class="stat-card">
             <div class="stat-card-info">
               <div class="label">Active Events</div>
               <div class="value">48</div>
             </div>
-            <div class="stat-card-icon">📋</div>
+            <div class="stat-card-icon">
+              <i class="ri-calendar-event-line"></i>
+            </div>
           </div>
           <div class="stat-card">
             <div class="stat-card-info">
               <div class="label">Registrations</div>
               <div class="value">9,430</div>
             </div>
-            <div class="stat-card-icon">🎫</div>
+            <div class="stat-card-icon">
+              <i class="ri-ticket-2-line"></i>
+            </div>
           </div>
           <div class="stat-card">
             <div class="stat-card-info">
               <div class="label">System Uptime</div>
               <div class="value">99.9%</div>
             </div>
-            <div class="stat-card-icon">🟢</div>
+            <div class="stat-card-icon"
+              style="color:var(--success)">
+              <i class="ri-checkbox-circle-line"></i>
+            </div>
           </div>
         </div>
         <div class="section-title">Recent Registrations</div>
@@ -151,12 +112,9 @@
           <table class="data-table">
             <thead>
               <tr>
-                <th>Attendee</th>
-                <th>Email</th>
-                <th>Event</th>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Status</th>
+                <th>Attendee</th><th>Email</th>
+                <th>Event</th><th>Date</th>
+                <th>Amount</th><th>Status</th>
               </tr>
             </thead>
             <tbody id="attendeesTableBody"></tbody>
@@ -164,41 +122,48 @@
         </div>
       </div>
 
-      <!-- Tab: All Users -->
+      <!-- All Users Tab -->
       <div class="tab-content" id="tab-users">
         <div class="section-title">All Users</div>
         <div style="overflow-x:auto">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th>Name</th><th>Email</th>
+                <th>Role</th><th>Status</th><th>Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><div style="display:flex;align-items:center;gap:10px">
-                  <div class="avatar-circle">M</div>Muon Sokea</div></td>
+                  <div class="avatar-circle">M</div>Muon Sokea
+                </div></td>
                 <td>muonsokea@gmail.com</td>
                 <td>Admin</td>
                 <td><span class="badge badge-confirmed">Active</span></td>
                 <td><div class="action-btns">
-                  <button class="btn btn-outline btn-sm">✏️ Edit</button>
-                  <button class="btn btn-danger btn-sm">🚫 Suspend</button>
+                  <button class="btn btn-outline btn-sm">
+                    <i class="ri-edit-line"></i> Edit
+                  </button>
+                  <button class="btn btn-danger btn-sm">
+                    <i class="ri-forbid-line"></i> Suspend
+                  </button>
                 </div></td>
               </tr>
               <tr>
                 <td><div style="display:flex;align-items:center;gap:10px">
-                  <div class="avatar-circle">S</div>San Sotheayuth</div></td>
-                <td>attendee@example.com</td>
+                  <div class="avatar-circle">S</div>San Sotheayuth
+                </div></td>
+                <td>attendee@erms.com</td>
                 <td>Attendee</td>
                 <td><span class="badge badge-confirmed">Active</span></td>
                 <td><div class="action-btns">
-                  <button class="btn btn-outline btn-sm">✏️ Edit</button>
-                  <button class="btn btn-danger btn-sm">🚫 Suspend</button>
+                  <button class="btn btn-outline btn-sm">
+                    <i class="ri-edit-line"></i> Edit
+                  </button>
+                  <button class="btn btn-danger btn-sm">
+                    <i class="ri-forbid-line"></i> Suspend
+                  </button>
                 </div></td>
               </tr>
             </tbody>
@@ -206,97 +171,107 @@
         </div>
       </div>
 
-      <!-- Tab: System Settings -->
+      <!-- System Settings Tab -->
       <div class="tab-content" id="tab-settings">
         <div class="section-title">System Configuration</div>
-
-        <!-- Notification Settings -->
         <div class="card" style="margin-bottom:16px">
-          <div style="font-size:15px;font-weight:600;margin-bottom:14px">
-            🔔 Notification Settings
+          <div style="font-size:15px;font-weight:600;
+            margin-bottom:14px;display:flex;align-items:center;gap:8px">
+            <i class="ri-notification-3-line"
+              style="color:var(--primary)"></i>
+            Notification Settings
           </div>
           <div class="toggle-row">
             <div class="toggle-info">
               <div class="t-label">Email Notifications</div>
               <div class="t-sub">Send email notifications to users</div>
             </div>
-            <button class="toggle on" onclick="this.classList.toggle('on');
-              this.classList.toggle('off')"></button>
+            <button class="toggle on"
+              onclick="this.classList.toggle('on');
+                       this.classList.toggle('off')"></button>
           </div>
           <div class="toggle-row" style="border:none">
             <div class="toggle-info">
               <div class="t-label">SMS Notifications</div>
               <div class="t-sub">Send SMS notifications to users</div>
             </div>
-            <button class="toggle on" onclick="this.classList.toggle('on');
-              this.classList.toggle('off')"></button>
+            <button class="toggle on"
+              onclick="this.classList.toggle('on');
+                       this.classList.toggle('off')"></button>
           </div>
         </div>
 
-        <!-- Database Settings -->
         <div class="card" style="margin-bottom:16px">
-          <div style="font-size:15px;font-weight:600;margin-bottom:14px">
-            🗄️ Database Settings
+          <div style="font-size:15px;font-weight:600;
+            margin-bottom:14px;display:flex;align-items:center;gap:8px">
+            <i class="ri-database-2-line"
+              style="color:var(--success)"></i>
+            Database Settings
           </div>
-          <div class="toggle-row">
+          <div class="toggle-row" style="border:none">
             <div class="toggle-info">
               <div class="t-label">Automatic Backups</div>
-              <div class="t-sub">Daily automated database backups at 2:00 AM</div>
+              <div class="t-sub">Daily automated backups at 2:00 AM</div>
             </div>
-            <button class="toggle on" onclick="this.classList.toggle('on');
-              this.classList.toggle('off')"></button>
+            <button class="toggle on"
+              onclick="this.classList.toggle('on');
+                       this.classList.toggle('off')"></button>
           </div>
           <div style="margin-top:12px">
             <button class="btn btn-success btn-sm"
-              onclick="alert('Latest backup downloaded!')">
-              ⬇️ Download Latest Backup
+              onclick="alert('Backup downloaded!')">
+              <i class="ri-download-line"></i> Download Latest Backup
             </button>
           </div>
         </div>
 
-        <!-- Security Settings -->
         <div class="card" style="margin-bottom:16px">
-          <div style="font-size:15px;font-weight:600;margin-bottom:14px">
-            🛡️ Security Settings
+          <div style="font-size:15px;font-weight:600;
+            margin-bottom:14px;display:flex;align-items:center;gap:8px">
+            <i class="ri-shield-check-line"
+              style="color:var(--danger)"></i>
+            Security Settings
           </div>
-          <div class="toggle-row">
+          <div class="toggle-row" style="border:none">
             <div class="toggle-info">
               <div class="t-label">Two-Factor Authentication</div>
               <div class="t-sub">Require 2FA for all administrators</div>
             </div>
-            <button class="toggle on" onclick="this.classList.toggle('on');
-              this.classList.toggle('off')"></button>
+            <button class="toggle on"
+              onclick="this.classList.toggle('on');
+                       this.classList.toggle('off')"></button>
           </div>
           <div style="display:flex;gap:24px;margin-top:14px;font-size:14px">
             <div>
-              <div style="color:var(--text-light);font-size:12px">Session Timeout</div>
+              <div style="color:var(--text-light);font-size:12px">
+                Session Timeout
+              </div>
               <div style="font-weight:600">30 minutes</div>
             </div>
             <div>
-              <div style="color:var(--text-light);font-size:12px">Password Complexity</div>
+              <div style="color:var(--text-light);font-size:12px">
+                Password Complexity
+              </div>
               <div style="font-weight:600">High</div>
             </div>
           </div>
         </div>
 
         <button class="btn btn-primary btn-full"
-          onclick="alert('Settings saved successfully!')">
-          ⚙️ Save All Settings
+          onclick="alert('Settings saved!')">
+          <i class="ri-settings-3-line"></i> Save All Settings
         </button>
       </div>
 
-      <!-- Tab: Audit Logs -->
+      <!-- Audit Logs Tab -->
       <div class="tab-content" id="tab-audit">
         <div class="section-title">Audit Logs</div>
         <div style="overflow-x:auto">
           <table class="data-table">
             <thead>
               <tr>
-                <th>Timestamp</th>
-                <th>User</th>
-                <th>Action</th>
-                <th>IP Address</th>
-                <th>Status</th>
+                <th>Timestamp</th><th>User</th>
+                <th>Action</th><th>IP Address</th><th>Status</th>
               </tr>
             </thead>
             <tbody>
@@ -321,28 +296,24 @@
                 <td>203.45.67.89</td>
                 <td><span class="badge badge-full">Failed</span></td>
               </tr>
-              <tr>
-                <td>2026-03-27 10:00</td>
-                <td>Proeung Sivly</td>
-                <td>Event created</td>
-                <td>192.168.1.3</td>
-                <td><span class="badge badge-confirmed">Success</span></td>
-              </tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Tab: System Health -->
+      <!-- System Health Tab -->
       <div class="tab-content" id="tab-health">
         <div style="display:flex;align-items:center;
           justify-content:space-between;margin-bottom:16px">
-          <div class="section-title" style="margin:0">System Health Monitoring</div>
+          <div class="section-title" style="margin:0">
+            System Health Monitoring
+          </div>
           <button class="btn btn-outline btn-sm"
-            onclick="alert('Data refreshed!')">🔄 Refresh Data</button>
+            onclick="alert('Refreshed!')">
+            <i class="ri-refresh-line"></i> Refresh Data
+          </button>
         </div>
 
-        <!-- Health Cards -->
         <div class="health-cards">
           <div class="health-card">
             <div class="health-label">CPU Usage</div>
@@ -370,7 +341,6 @@
           </div>
         </div>
 
-        <!-- Service Status -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
           <div class="card">
             <div style="font-size:15px;font-weight:600;margin-bottom:12px">
@@ -378,23 +348,33 @@
             </div>
             <div class="service-row">
               <span>Web Server</span>
-              <span class="service-ok">✅ Operational</span>
+              <span class="service-ok">
+                <i class="ri-checkbox-circle-line"></i> Operational
+              </span>
             </div>
             <div class="service-row">
               <span>Database Server</span>
-              <span class="service-ok">✅ Operational</span>
+              <span class="service-ok">
+                <i class="ri-checkbox-circle-line"></i> Operational
+              </span>
             </div>
             <div class="service-row">
               <span>Email Service</span>
-              <span class="service-ok">✅ Operational</span>
+              <span class="service-ok">
+                <i class="ri-checkbox-circle-line"></i> Operational
+              </span>
             </div>
             <div class="service-row">
               <span>SMS Service</span>
-              <span class="service-ok">✅ Operational</span>
+              <span class="service-ok">
+                <i class="ri-checkbox-circle-line"></i> Operational
+              </span>
             </div>
             <div class="service-row" style="border:none">
               <span>Payment Gateway</span>
-              <span class="service-ok">✅ Operational</span>
+              <span class="service-ok">
+                <i class="ri-checkbox-circle-line"></i> Operational
+              </span>
             </div>
           </div>
           <div class="card">
@@ -403,7 +383,7 @@
             </div>
             <div class="service-row">
               <span>Backup Date</span>
-              <span>2026-03-27 02:00:00</span>
+              <span>2026-03-27 02:00</span>
             </div>
             <div class="service-row">
               <span>Backup Size</span>
@@ -411,11 +391,13 @@
             </div>
             <div class="service-row">
               <span>Status</span>
-              <span class="service-ok">✅ Successful</span>
+              <span class="service-ok">
+                <i class="ri-checkbox-circle-line"></i> Successful
+              </span>
             </div>
             <div class="service-row" style="border:none">
               <span>Next Scheduled</span>
-              <span>2026-03-28 02:00:00</span>
+              <span>2026-03-28 02:00</span>
             </div>
           </div>
         </div>
@@ -424,8 +406,8 @@
     </div>
   </div>
 
-  <script src="../js/navbar.js"></script>
-  <script src="../js/dashboard.js"></script>
+  <script src="../JS/1_navbar.js"></script>
+  <script src="../JS/4_dashboard.js"></script>
   <script>
     requireAuth();
     requireRole(["Supervisor"]);

@@ -2,202 +2,234 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Planning Center — Event Detail</title>
-  <link rel="stylesheet" href="../css/global.css" />
-  <link rel="stylesheet" href="../css/navbar.css" />
-  <link rel="stylesheet" href="../css/events.css" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../CSS/1_global.css" />
+  <link rel="stylesheet" href="../CSS/2_navbar.css" />
   <style>
-    .event-detail-page { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
-    .event-detail-img {
-      width: 100%;
-      height: 320px;
-      border-radius: var(--border-radius-lg);
-      overflow: hidden;
-      margin-bottom: 24px;
-      background: #ddd;
-    }
-    .event-detail-img img {
-      width: 100%; height: 100%; object-fit: cover;
-    }
-    .event-detail-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .event-detail-header h1 { font-size: 24px; margin-bottom: 6px; }
-    .event-detail-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-    .event-detail-meta .meta-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-      color: var(--text-medium);
-    }
-    .event-detail-desc {
-      font-size: 15px;
-      color: var(--text-medium);
-      line-height: 1.8;
-      margin-bottom: 24px;
-    }
-    .event-detail-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px;
-      background: var(--bg-white);
-      border: 1px solid var(--border);
-      border-radius: var(--border-radius-lg);
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .event-detail-price {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--primary);
-    }
-    .seat-info {
-      font-size: 13px;
-      color: var(--text-light);
-      margin-top: 4px;
-    }
+    .detail-page{max-width:1100px;margin:0 auto;padding:28px 24px}
+    .detail-top{display:flex;gap:24px;background:var(--bg-white);border:1px solid var(--border);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:20px}
+    .detail-img{width:420px;min-width:420px;height:260px;position:relative;background:#ddd;overflow:hidden}
+    .detail-img img{width:100%;height:100%;object-fit:cover}
+    .detail-price-tag{position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.55);color:#fff;font-size:14px;font-weight:700;padding:4px 12px;border-radius:6px}
+    .detail-info{flex:1;padding:24px 20px;display:flex;flex-direction:column;justify-content:space-between}
+    .detail-category-badge{display:inline-block;padding:4px 14px;border-radius:20px;border:1.5px solid var(--primary);color:var(--primary);font-size:13px;font-weight:500;margin-bottom:10px}
+    .detail-info h1{font-size:22px;font-weight:700;margin-bottom:14px}
+    .detail-meta-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+    .detail-meta-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-medium)}
+    .detail-meta-item i{color:var(--primary);font-size:16px}
+    .avail-row{display:flex;justify-content:space-between;font-size:13px;color:var(--text-light);margin-bottom:6px}
+    .avail-bar{height:6px;background:#eee;border-radius:3px;margin-bottom:16px;overflow:hidden}
+    .avail-fill{height:100%;background:var(--success);border-radius:3px}
+    .detail-actions{display:flex;gap:10px;align-items:center}
+    .share-btn{width:40px;height:40px;border-radius:8px;border:1px solid var(--border);background:var(--bg-white);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:var(--text-medium)}
+    .detail-bottom{display:grid;grid-template-columns:1fr 340px;gap:20px}
+    .detail-left{display:flex;flex-direction:column;gap:16px}
+    .detail-section{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--border-radius-lg);padding:20px 24px}
+    .detail-section-title{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700;color:var(--text-dark);margin-bottom:12px}
+    .icon-circle{width:30px;height:30px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px}
+    .detail-section p{font-size:14px;color:var(--text-medium);line-height:1.8}
+    .highlights-list{display:flex;flex-direction:column;gap:10px}
+    .highlight-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text-medium)}
+    .highlight-check{width:20px;height:20px;border-radius:4px;background:#d4edda;color:var(--success);display:flex;align-items:center;justify-content:center}
+    .detail-right{display:flex;flex-direction:column;gap:16px}
+    .organizer-card{background:var(--bg-white);border:1px solid var(--border);border-radius:var(--border-radius-lg);padding:20px}
+    .organizer-card h3{font-size:16px;font-weight:700;margin-bottom:14px}
+    .organizer-field{margin-bottom:12px}
+    .organizer-field .f-label{font-size:12px;color:var(--text-light);margin-bottom:2px}
+    .organizer-field .f-value{font-size:14px;font-weight:600;color:var(--text-dark)}
+    .join-card{background:var(--primary-light);border:1px solid var(--primary-border);border-radius:var(--border-radius-lg);padding:20px;text-align:center}
+    .join-card h3{font-size:17px;font-weight:700;color:var(--text-dark);margin-bottom:8px}
+    .join-card p{font-size:13px;color:var(--text-medium);margin-bottom:16px;line-height:1.6}
+    @media(max-width:900px){.detail-top{flex-direction:column}.detail-img{width:100%;min-width:unset;height:220px}.detail-bottom{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
 
-  <!-- ── Navbar ── -->
   <nav class="navbar">
-    <a class="nav-logo" href="../index.html">
+    <a class="nav-logo" href="../HTML/1_index.html">
       <span class="logo-top">Planning</span>
       <span class="logo-bottom">Center</span>
     </a>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <button class="hamburger" id="hamburger">
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links" id="navLinks">
-      <button class="btn btn-outline"
-        onclick="location.href='../index.html'">Home</button>
-      <button class="btn btn-outline"
-        onclick="goToDashboard()">Dashboard</button>
-      <button class="btn btn-outline" onclick="logout()">🚪 Logout</button>
+      <button class="btn btn-primary"
+        onclick="location.href='../HTML/1_index.html'">
+        <i class="ri-home-line"></i> Home
+      </button>
+      <button class="btn btn-outline" onclick="goToDashboard()">
+        <i class="ri-dashboard-line"></i> Dashboard
+      </button>
+      <button class="btn btn-outline" onclick="logout()">
+        <i class="ri-logout-box-r-line"></i> Logout
+      </button>
     </div>
   </nav>
 
-  <main class="event-detail-page">
-
-    <!-- Back Button -->
-    <button class="btn btn-outline btn-sm"
-      style="margin-bottom:20px"
-      onclick="history.back()">← Back to Events</button>
-
-    <!-- Event Image -->
-    <div class="event-detail-img">
-      <img id="detailImage" src="../assets/images/events/default.jpg"
-        alt="Event image" />
-    </div>
-
-    <!-- Header -->
-    <div class="event-detail-header">
-      <div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-          <span class="event-category" id="detailCategory">Technology</span>
-          <span class="badge badge-available" id="detailStatus">Available</span>
-          <span class="event-rating">⭐ <span id="detailRating">4.0</span></span>
+  <main class="detail-page">
+    <div class="detail-top">
+      <div class="detail-img">
+        <img id="detailImage" src="../Images/Sport event.jpg" alt="Event"/>
+        <div class="detail-price-tag">$<span id="detailPrice">250</span></div>
+      </div>
+      <div class="detail-info">
+        <div>
+          <div class="detail-category-badge" id="detailCategory">Technology</div>
+          <h1 id="detailTitle">Tech Innovation Summit 2026</h1>
+          <div class="detail-meta-list">
+            <div class="detail-meta-item">
+              <i class="ri-calendar-line"></i>
+              <span id="detailDate">April 30, 2026</span>
+            </div>
+            <div class="detail-meta-item">
+              <i class="ri-time-line"></i>
+              <span id="detailTime">9:00 AM - 5:00 PM</span>
+            </div>
+            <div class="detail-meta-item">
+              <i class="ri-map-pin-line"></i>
+              <span id="detailLocation">Prey Veng Province</span>
+            </div>
+            <div class="detail-meta-item">
+              <i class="ri-group-line"></i>
+              <span id="detailAttending">1000 / 2300 attendees</span>
+            </div>
+          </div>
+          <div class="avail-row">
+            <span>Availability</span>
+            <span id="seatsLeft">1300 seats left</span>
+          </div>
+          <div class="avail-bar">
+            <div class="avail-fill" id="availFill" style="width:43%"></div>
+          </div>
         </div>
-        <h1 id="detailTitle">Tech Innovation Summit 2026</h1>
+        <div class="detail-actions">
+          <button class="btn btn-primary" style="flex:1"
+            id="registerBtn" onclick="goRegister()">
+            Register Now
+          </button>
+          <button class="share-btn"
+            onclick="alert('Link: ' + location.href)">
+            <i class="ri-share-line"></i>
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Meta Info -->
-    <div class="event-detail-meta">
-      <div class="meta-item">📅 <span id="detailDate">April 30, 2026</span></div>
-      <div class="meta-item">🕘 <span id="detailTime">9:00 AM - 5:00 PM</span></div>
-      <div class="meta-item">📍 <span id="detailLocation">Prey Veng Province</span></div>
-      <div class="meta-item">👥 <span id="detailAttending">1,000 attending</span></div>
-    </div>
-
-    <hr class="divider" />
-
-    <!-- Description -->
-    <div class="event-detail-desc" id="detailDesc">
-      Join us for an exciting day of innovation, technology, and networking.
-      This summit brings together industry leaders, entrepreneurs, and tech
-      enthusiasts from across Cambodia and Southeast Asia. Featuring keynote
-      speakers, workshops, and panel discussions on the latest trends in
-      artificial intelligence, blockchain, and digital transformation.
-    </div>
-
-    <!-- Footer with Price + Register -->
-    <div class="event-detail-footer">
-      <div>
-        <div class="event-detail-price">$<span id="detailPrice">250</span></div>
-        <div class="seat-info">per ticket · Limited seats available</div>
+    <div class="detail-bottom">
+      <div class="detail-left">
+        <div class="detail-section">
+          <div class="detail-section-title">
+            <div class="icon-circle">
+              <i class="ri-information-line"></i>
+            </div>
+            About This Event
+          </div>
+          <p id="detailAbout">
+            Join us for the premier technology conference of 2026.
+            Connect with industry leaders, discover cutting-edge
+            innovations, and network with fellow tech enthusiasts
+            from around the world.
+          </p>
+        </div>
+        <div class="detail-section">
+          <div class="detail-section-title">Event Highlights</div>
+          <div class="highlights-list">
+            <div class="highlight-item">
+              <div class="highlight-check">
+                <i class="ri-check-line"></i>
+              </div>
+              20+ keynote speakers from top tech companies
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-check">
+                <i class="ri-check-line"></i>
+              </div>
+              Hands-on workshops and interactive sessions
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-check">
+                <i class="ri-check-line"></i>
+              </div>
+              Networking opportunities with 2000+ attendees
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-check">
+                <i class="ri-check-line"></i>
+              </div>
+              Exclusive product launches and demos
+            </div>
+            <div class="highlight-item">
+              <div class="highlight-check">
+                <i class="ri-check-line"></i>
+              </div>
+              Certificate of attendance
+            </div>
+          </div>
+        </div>
       </div>
-      <button class="btn btn-primary"
-        style="padding:12px 32px;font-size:15px"
-        id="registerBtn"
-        onclick="registerForEvent()">
-        Register Now
-      </button>
-    </div>
 
+      <div class="detail-right">
+        <div class="organizer-card">
+          <h3>About This Event</h3>
+          <div class="organizer-field">
+            <div class="f-label">Organizer</div>
+            <div class="f-value">TechEvents Inc.</div>
+          </div>
+          <div class="organizer-field">
+            <div class="f-label">Email</div>
+            <div class="f-value">contact@techevents.com</div>
+          </div>
+          <div class="organizer-field">
+            <div class="f-label">Phone</div>
+            <div class="f-value">+1 (555) 123-4567</div>
+          </div>
+        </div>
+        <div class="join-card">
+          <h3>Ready to Join?</h3>
+          <p>Secure your spot today and be part of this amazing event!</p>
+          <button class="btn btn-primary btn-full" onclick="goRegister()">
+            Register Now
+          </button>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <script src="../js/navbar.js"></script>
-  <script src="../js/events.js"></script>
+  <script src="../JS/1_navbar.js"></script>
+  <script src="../JS/2_events.js"></script>
   <script>
-    // Load event from URL param or localStorage
     document.addEventListener("DOMContentLoaded", () => {
-      const params = new URLSearchParams(window.location.search);
-      const id     = params.get("id");
-      const event  = id ? getEventById(parseInt(id)) : loadEventFromStorage();
-
-      if (!event) {
-        document.querySelector(".event-detail-page").innerHTML =
-          `<div class="empty-state" style="margin-top:80px">
-            <p>Event not found.</p>
-            <a href="../index.html" class="btn btn-primary"
-               style="margin-top:16px">Back to Events</a>
-          </div>`;
-        return;
+      const event = loadEventFromStorage();
+      if (event) {
+        document.getElementById("detailImage").src =
+          event.image.startsWith("../") ? event.image : "../" + event.image;
+        document.getElementById("detailCategory").textContent = event.category;
+        document.getElementById("detailTitle").textContent    = event.title;
+        document.getElementById("detailDate").textContent     = event.date;
+        document.getElementById("detailTime").textContent     = event.time;
+        document.getElementById("detailLocation").textContent = event.location;
+        document.getElementById("detailPrice").textContent    = event.price;
+        document.getElementById("detailAttending").textContent =
+          event.attending.toLocaleString() + " / " +
+          event.capacity.toLocaleString() + " attendees";
+        const seats = event.capacity - event.attending;
+        document.getElementById("seatsLeft").textContent =
+          seats.toLocaleString() + " seats left";
+        document.getElementById("availFill").style.width =
+          Math.round((event.attending / event.capacity) * 100) + "%";
+        if (event.status === "Full") {
+          const btn = document.getElementById("registerBtn");
+          btn.textContent = "Event Full";
+          btn.disabled = true;
+        }
       }
-
-      // Populate fields
-      document.getElementById("detailImage").src       = "../" + event.image;
-      document.getElementById("detailCategory").textContent = event.category;
-      document.getElementById("detailStatus").textContent   = event.status;
-      document.getElementById("detailStatus").className     =
-        `badge badge-${event.status === "Full" ? "full" : "available"}`;
-      document.getElementById("detailRating").textContent   = event.rating;
-      document.getElementById("detailTitle").textContent    = event.title;
-      document.getElementById("detailDate").textContent     = event.date;
-      document.getElementById("detailTime").textContent     = event.time;
-      document.getElementById("detailLocation").textContent = event.location;
-      document.getElementById("detailAttending").textContent =
-        event.attending.toLocaleString() + " attending";
-      document.getElementById("detailPrice").textContent    = event.price;
-
-      // Disable register if full
-      if (event.status === "Full") {
-        const btn = document.getElementById("registerBtn");
-        btn.textContent = "Event Full";
-        btn.disabled    = true;
-      }
-
-      // Save for registration page
-      saveEventToStorage(event);
     });
-
-    function registerForEvent() {
-      window.location.href = "event-register.html";
+    function goRegister() {
+      window.location.href =
+        "../HTML/9_Registration & payment form.html";
     }
   </script>
 </body>
