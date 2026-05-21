@@ -50,7 +50,7 @@ Welcome to the **Club Center Project**! This web platform replaces manual sign-u
 - **Version:** `0.1` | **Draft Date:** January 10, 2026
 
 ## 🔗 See The Prototype
-👉 [Open Figma Prototype][(https://www.figma.com/design/UbTJfyAl3NxByIfTct2ayM/Untitled?node-id=0-1&t=rKQoRdXT9Ph5a5wb-1)](https://www.figma.com/design/NnA6X6Y5Fwk4mDngHjVWGA/Untitled?node-id=166-924&t=xpid8d4ojN1xNYMl-1)
+👉 [Open Figma Prototype] [(https://www.figma.com/design)]
 
 ## 📝 Important Notes
 - This is an **academic project** focused on registration, ticketing, and event management.
