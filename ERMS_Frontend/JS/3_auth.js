@@ -4,10 +4,10 @@
 // ─────────────────────────────────────
 
 const mockUsers = [
-  { id: 1, firstName: "Muon",    lastName: "Sokea",      email: "admin@erms.com",        password: "Admin@123",    role: "Admin"      },
-  { id: 2, firstName: "San",     lastName: "Sotheayuth", email: "attendee@erms.com",     password: "Attend@123",   role: "Attendee"   },
-  { id: 3, firstName: "Proeung", lastName: "Sivly",      email: "organizer@erms.com",    password: "Organ@123",    role: "Organizer"  },
-  { id: 4, firstName: "Lang",    lastName: "Socheat",    email: "supervisor@erms.com",   password: "Super@123",    role: "Supervisor" },
+  { id: 1, firstName: "Muon",    lastName: "Sokea",      email: "muonsokea@gmail.com",        password: "sokea123",    role: "Super Admin"  },
+  { id: 2, firstName: "San",     lastName: "Sotheayuth", email: "sansotheayuth@gmail.com",     password: "sotheayuth123",   role: "Admin"   },
+  { id: 3, firstName: "Proeung", lastName: "Sivly",      email: "proeungsivly@gmail.com",    password: "sivly123",    role: "Organizer"  },
+  { id: 4, firstName: "Lang",    lastName: "Socheat",    email: "langsocheat@gmail.com",   password: "socheat123",    role: "Attendee" },
 ];
 
 function showError(msg) {

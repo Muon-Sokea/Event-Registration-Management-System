@@ -34,21 +34,44 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="hero">
+<section class="hero">
+
+    <!-- 4 slides + clone of slide 1 at the end -->
+    <div class="hero-slides">
+      <div class="hero-slide"></div>  <!-- Slide 1 -->
+      <div class="hero-slide"></div>  <!-- Slide 2 -->
+      <div class="hero-slide"></div>  <!-- Slide 3 -->
+      <div class="hero-slide"></div>  <!-- Slide 4 -->
+      <div class="hero-slide clone"></div>  <!-- Clone of Slide 1 -->
+    </div>
+
+    <!-- Dark overlay -->
     <div class="hero-overlay"></div>
+
+    <!-- Content -->
     <div class="hero-content">
       <h1>Discover Amazing Events</h1>
-      <p>Join thousands of attendees at conferences, workshops, and networking events</p>
+      <p>Join thousands of attendees at conferences,
+        workshops, and networking events</p>
       <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search events..." />
+        <input type="text" id="searchInput"
+          placeholder="Search events..." />
         <button class="search-btn" onclick="handleSearch()">
           <i class="ri-search-line"></i>
         </button>
       </div>
     </div>
-  </section>
 
+    <!-- Only 4 dots — clone has no dot -->
+    <div class="hero-dots">
+      <button class="hero-dot active" onclick="goToSlide(0)"></button>
+      <button class="hero-dot" onclick="goToSlide(1)"></button>
+      <button class="hero-dot" onclick="goToSlide(2)"></button>
+      <button class="hero-dot" onclick="goToSlide(3)"></button>
+    </div>
+
+  </section>
+  
   <!-- Stats Bar -->
   <section class="stats-bar">
     <div class="stat-item">

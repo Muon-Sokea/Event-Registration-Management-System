@@ -1,78 +1,168 @@
+/* ── Hero ── */
 .hero {
   position: relative;
   width: 100%;
-  min-height: 300px;
-  background-image: url('../Images/Sport event.jpg');
-  background-size: cover;
-  background-position: center;
+  min-height: 380px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 56px 32px;
+  overflow: hidden;
 }
 
+/* ── Slideshow track — 5 slides wide (4 real + 1 clone) ── */
+.hero-slides {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 500%;
+  height: 100%;
+  display: flex;
+  z-index: 0;
+  transition: transform 0.85s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+  will-change: transform;
+}
+
+/* ── Each slide — 20% of 500% track = 1 viewport width ── */
+.hero-slide {
+  width: 20%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+/* ── 4 real slides ── */
+.hero-slide:nth-child(1) {
+  background-image: url('../Images/Sport event.jpg');
+}
+.hero-slide:nth-child(2) {
+  background-image: url('../Images/Sport run.webp');
+}
+.hero-slide:nth-child(3) {
+  background-image: url('../Images/Technology.png');
+}
+.hero-slide:nth-child(4) {
+  background-image: url('../Images/Workshop.png');
+}
+
+/* ── Clone of slide 1 at position 5 ── */
+.hero-slide.clone {
+  background-image: url('../Images/Sport event.jpg');
+}
+
+/* ── Dark overlay ── */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.50);
+  z-index: 1;
+  pointer-events: none;
 }
 
+/* ── Hero content ── */
 .hero-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   text-align: center;
   width: 100%;
-  max-width: 640px;
+  max-width: 700px;
 }
 
 .hero-content h1 {
-  font-size: 34px;
+  font-size: 36px;
   font-weight: 700;
-  color: var(--text-white);
+  color: #ffffff;
   margin-bottom: 10px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .hero-content p {
   font-size: 15px;
   color: #e8e8e8;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
   line-height: 1.7;
 }
 
+/* ── Search bar ── */
 .search-bar {
   display: flex;
   align-items: center;
-  background: var(--bg-white);
-  border-radius: var(--border-radius);
+  background: #ffffff;
+  border-radius: 50px;
   overflow: hidden;
-  max-width: 520px;
+  max-width: 680px;
+  width: 100%;
   margin: 0 auto;
 }
 
 .search-bar input {
   flex: 1;
-  padding: 13px 18px;
+  padding: 15px 24px;
   border: none;
   outline: none;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-dark);
   font-family: var(--font);
   background: transparent;
 }
 
+.search-bar input::placeholder {
+  color: #aaaaaa;
+  font-size: 14px;
+}
+
 .search-btn {
-  padding: 13px 18px;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  margin: 5px;
+  border-radius: 50%;
   background: var(--primary);
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s;
-  font-size: 18px;
-  color: var(--text-white);
+  transition: background 0.2s, transform 0.15s;
+  color: #ffffff;
+  flex-shrink: 0;
 }
-.search-btn:hover { background: var(--primary-dark); }
+
+.search-btn i { font-size: 18px; }
+
+.search-btn:hover {
+  background: var(--primary-dark);
+  transform: scale(1.06);
+}
+
+/* ── Slide dots ── */
+.hero-dots {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 3;
+}
+
+.hero-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.40);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.hero-dot.active {
+  background: #ffffff;
+  transform: scale(1.35);
+}
 
 /* ── Stats Bar ── */
 .stats-bar {
@@ -104,9 +194,12 @@
   margin-top: 3px;
 }
 
+/* ── Responsive ── */
 @media (max-width: 768px) {
-  .hero { min-height: 240px; padding: 40px 20px; }
+  .hero            { min-height: 260px; padding: 40px 16px; }
   .hero-content h1 { font-size: 24px; }
-  .stats-bar { gap: 28px; padding: 20px 16px; flex-wrap: wrap; }
-  .stat-number { font-size: 20px; }
+  .hero-content p  { font-size: 14px; margin-bottom: 20px; }
+  .search-bar      { max-width: 100%; }
+  .stats-bar       { gap: 24px; padding: 20px 16px; flex-wrap: wrap; }
+  .stat-number     { font-size: 20px; }
 }

@@ -30,7 +30,7 @@ const mockEvents = [
     attending: 1250,
     capacity: 2000,
     status: "Full",
-    image: "../Images/Workshop.png",
+    image: "../Images/workshop group.webp",
   },
   {
     id: 3,
@@ -48,9 +48,9 @@ const mockEvents = [
   },
   {
     id: 4,
-    title: "Music Festival 2026",
-    category: "Entertainment",
-    date: "March 20, 2026",
+    title: "AI Colaboration of Technology",
+    category: "Technology",
+    date: "October 15, 2026",
     time: "6:00 PM - 11:00 PM",
     location: "Phnom Penh, Koh Pech",
     price: 100,
@@ -58,7 +58,7 @@ const mockEvents = [
     attending: 5230,
     capacity: 6000,
     status: "Available",
-    image: "../Images/Sport run.webp",
+    image: "../Images/event-technology.jpg",
   },
   {
     id: 5,
@@ -86,21 +86,21 @@ const mockEvents = [
     attending: 1250,
     capacity: 2000,
     status: "Full",
-    image: "../Images/Sport event.jpg",
+    image: "../Images/Networking.jpg",
   },
   {
     id: 7,
     title: "Annual Healthcare Conference",
-    category: "Business",
+    category: "Healthcare",
     date: "March 20, 2026",
     time: "8:00 AM - 5:00 PM",
-    location: "Phnom Penh, RUPP",
+    location: "Phnom Penh",
     price: 300,
     rating: 4.0,
     attending: 1250,
     capacity: 2000,
     status: "Available",
-    image: "../Images/Technology.png",
+    image: "../Images/Healthcare-Events.webp",
   },
   {
     id: 8,
@@ -115,6 +115,48 @@ const mockEvents = [
     capacity: 2000,
     status: "Available",
     image: "../Images/Sport run.webp",
+  },
+  {
+    id: 9,
+    title: "Digital Marketing Workshop",
+    category: "Workshop",
+    date: "May 22, 2026",
+    time: "9:00 AM - 12:00 PM",
+    location: "Phnom Penh, ITC",
+    price: 150,
+    rating: 4.0,
+    attending: 850,
+    capacity: 1000,
+    status: "Available",
+    image: "../Images/Conference Workshop.png",
+  },
+  {
+    id: 10,
+    title: "Fundraiser on Eventbrite",
+    category: "Business",
+    date: "January 30, 2026",
+    time: "2:00 PM - 6:00 PM",
+    location: "Phnom Penh, AUPP",
+    price: 50,
+    rating: 4.0,
+    attending: 400,
+    capacity: 500,
+    status: "Available",
+    image: "../Images/Business.webp",
+  },
+  {
+    id: 11,
+    title: "Corporate Event Entertainment Ideas",
+    category: "Entertainment",
+    date: "April 5, 2026",
+    time: "8:00 AM - 5:00 PM",
+    location: "Phnom Penh, RUPP",
+    price: 200,
+    rating: 4.5,
+    attending: 600,
+    capacity: 2000,
+    status: "Available",
+    image: "../Images/event entertainment.png",
   },
 ];
 
@@ -187,17 +229,23 @@ function handleSearch() {
 
 function applyFilters() {
   let filtered = mockEvents;
+
+  // Use window.currentSearch so navbar.js can update it
+  const search = (typeof window.currentSearch !== "undefined"
+    ? window.currentSearch
+    : currentSearch) || "";
+
   if (currentCategory !== "All") {
     filtered = filtered.filter(
       (e) => e.category.toLowerCase() === currentCategory.toLowerCase()
     );
   }
-  if (currentSearch) {
+  if (search) {
     filtered = filtered.filter(
       (e) =>
-        e.title.toLowerCase().includes(currentSearch) ||
-        e.location.toLowerCase().includes(currentSearch) ||
-        e.category.toLowerCase().includes(currentSearch)
+        e.title.toLowerCase().includes(search) ||
+        e.location.toLowerCase().includes(search) ||
+        e.category.toLowerCase().includes(search)
     );
   }
   renderEvents(filtered);
