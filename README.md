@@ -1,5 +1,12 @@
-# 🎉 Club Center Project: Event Registration & Management System
-> *Say goodbye to paper forms. Say hello to fast, simple, and digital event management.*
+# 🎉 Club Center
+### Event Registration & Management System
+
+*Paper-free campus event management platform*
+
+![Status](https://img.shields.io/badge/version-0.1-indigo)
+![Platform](https://img.shields.io/badge/platform-web-blue)
+![Responsive](https://img.shields.io/badge/mobile-friendly-green)
+![University](https://img.shields.io/badge/RUPP-Faculty%20of%20Engineering-red)
 
 ## 📖 Quick Overview
 Welcome to the **Club Center Project**! This web platform replaces manual sign-ups with a smooth online system. Attendees can browse events, register in a few clicks, and get instant digital tickets. Organizers can create events, track seats in real time, and send updates automatically. All built for a stress-free campus experience.
@@ -50,7 +57,7 @@ Welcome to the **Club Center Project**! This web platform replaces manual sign-u
 - **Version:** `0.1` | **Draft Date:** January 10, 2026
 
 ## 🔗 See The Prototype
-👉 [Open Figma Prototype](https://www.figma.com/design/UbTJfyAl3NxByIfTct2ayM/Untitled?node-id=0-1&t=rKQoRdXT9Ph5a5wb-1)
+👉 Open Figma Prototype [[(https://www.figma.com/design)]](https://www.figma.com/design/NnA6X6Y5Fwk4mDngHjVWGA/Event-Registration-and-Management-System?node-id=166-924&t=sP55Q49SGCuJCCoy-1)
 
 ## 📝 Important Notes
 - This is an **academic project** focused on registration, ticketing, and event management.
