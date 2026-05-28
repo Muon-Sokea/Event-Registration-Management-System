@@ -191,3 +191,59 @@
   .auth-hero h2 { font-size: 18px; }
   .name-row     { flex-direction: column; gap: 0; }
 }
+
+/* ── Social divider ── */
+.social-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 16px;
+  color: var(--text-light);
+  font-size: 13px;
+}
+
+.social-divider::before,
+.social-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Social buttons ── */
+.social-btns {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.social-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 8px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--border-radius);
+  background: var(--bg-white);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font);
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s,
+              box-shadow 0.15s;
+}
+
+.social-btn:hover {
+  background: var(--bg-light);
+  border-color: #bbb;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Responsive ── */
+@media (max-width: 400px) {
+  .social-btns   { flex-direction: column; }
+  .social-btn    { width: 100%; }
+}
