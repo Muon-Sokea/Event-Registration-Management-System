@@ -34,21 +34,16 @@
     </div>
   </nav>
 
-<section class="hero">
-
-    <!-- 4 slides + clone of slide 1 at the end -->
+  <!-- Hero Slideshow -->
+  <section class="hero">
     <div class="hero-slides">
-      <div class="hero-slide"></div>  <!-- Slide 1 -->
-      <div class="hero-slide"></div>  <!-- Slide 2 -->
-      <div class="hero-slide"></div>  <!-- Slide 3 -->
-      <div class="hero-slide"></div>  <!-- Slide 4 -->
-      <div class="hero-slide clone"></div>  <!-- Clone of Slide 1 -->
+      <div class="hero-slide"></div>
+      <div class="hero-slide"></div>
+      <div class="hero-slide"></div>
+      <div class="hero-slide"></div>
+      <div class="hero-slide clone"></div>
     </div>
-
-    <!-- Dark overlay -->
     <div class="hero-overlay"></div>
-
-    <!-- Content -->
     <div class="hero-content">
       <h1>Discover Amazing Events</h1>
       <p>Join thousands of attendees at conferences,
@@ -61,31 +56,34 @@
         </button>
       </div>
     </div>
-
-    <!-- Only 4 dots — clone has no dot -->
     <div class="hero-dots">
       <button class="hero-dot active" onclick="goToSlide(0)"></button>
       <button class="hero-dot" onclick="goToSlide(1)"></button>
       <button class="hero-dot" onclick="goToSlide(2)"></button>
       <button class="hero-dot" onclick="goToSlide(3)"></button>
     </div>
-
   </section>
-  
+
   <!-- Stats Bar -->
   <section class="stats-bar">
     <div class="stat-item">
-      <div class="stat-icon"><i class="ri-calendar-check-line"></i></div>
+      <div class="stat-icon">
+        <i class="ri-calendar-check-line"></i>
+      </div>
       <div class="stat-number">150+</div>
       <div class="stat-label">Upcoming Events</div>
     </div>
     <div class="stat-item">
-      <div class="stat-icon"><i class="ri-group-line"></i></div>
+      <div class="stat-icon">
+        <i class="ri-group-line"></i>
+      </div>
       <div class="stat-number">50K+</div>
       <div class="stat-label">Total Attendees</div>
     </div>
     <div class="stat-item">
-      <div class="stat-icon"><i class="ri-bar-chart-line"></i></div>
+      <div class="stat-icon">
+        <i class="ri-bar-chart-line"></i>
+      </div>
       <div class="stat-number">90%</div>
       <div class="stat-label">Satisfaction Rate</div>
     </div>
@@ -94,7 +92,8 @@
   <!-- Events Catalog -->
   <main class="events-section">
     <div class="filter-row">
-      <i class="ri-filter-3-line" style="color:var(--text-medium)"></i>
+      <i class="ri-filter-3-line"
+        style="color:var(--text-medium)"></i>
       <span style="font-weight:500">Filter by Category</span>
       <button class="filter-pill active" data-category="All"
         onclick="filterByCategory('All')">All</button>
@@ -117,8 +116,8 @@
       <div class="spinner"></div>
     </div>
   </main>
-  
-  <!-- ── Footer ── -->
+
+  <!-- Footer -->
   <footer class="footer">
     <div class="footer-top">
 
@@ -152,40 +151,63 @@
       <div class="footer-col">
         <h4 class="footer-heading">Quick Links</h4>
         <ul class="footer-links">
-          <li><a href="../HTML/1_index.html">
-            <i class="ri-arrow-right-s-line"></i> Home
-          </a></li>
-          <li><a href="../HTML/2_login.html">
-            <i class="ri-arrow-right-s-line"></i> Sign In
-          </a></li>
-          <li><a href="../HTML/3_register.html">
-            <i class="ri-arrow-right-s-line"></i> Create Account
-          </a></li>
-          <li><a href="#">
-            <i class="ri-arrow-right-s-line"></i> Browse Events
-          </a></li>
+          <li>
+            <a href="../HTML/1_index.html">
+              <i class="ri-arrow-right-s-line"></i> Home
+            </a>
+          </li>
+          <li>
+            <a href="../HTML/2_login.html">
+              <i class="ri-arrow-right-s-line"></i> Sign In
+            </a>
+          </li>
+          <li>
+            <a href="../HTML/3_register.html">
+              <i class="ri-arrow-right-s-line"></i> Create Account
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="ri-arrow-right-s-line"></i> Browse Events
+            </a>
+          </li>
         </ul>
       </div>
 
-      <!-- Event Categories -->
+      <!-- Categories -->
       <div class="footer-col">
         <h4 class="footer-heading">Categories</h4>
         <ul class="footer-links">
-          <li><a href="#" onclick="filterByCategory('Technology')">
-            <i class="ri-arrow-right-s-line"></i> Technology
-          </a></li>
-          <li><a href="#" onclick="filterByCategory('Business')">
-            <i class="ri-arrow-right-s-line"></i> Business
-          </a></li>
-          <li><a href="#" onclick="filterByCategory('Education')">
-            <i class="ri-arrow-right-s-line"></i> Education
-          </a></li>
-          <li><a href="#" onclick="filterByCategory('Sports')">
-            <i class="ri-arrow-right-s-line"></i> Sports
-          </a></li>
-          <li><a href="#" onclick="filterByCategory('Entertainment')">
-            <i class="ri-arrow-right-s-line"></i> Entertainment
-          </a></li>
+          <li>
+            <a href="#" onclick="filterByCategory('Technology');
+              return false;">
+              <i class="ri-arrow-right-s-line"></i> Technology
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="filterByCategory('Business');
+              return false;">
+              <i class="ri-arrow-right-s-line"></i> Business
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="filterByCategory('Education');
+              return false;">
+              <i class="ri-arrow-right-s-line"></i> Education
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="filterByCategory('Sports');
+              return false;">
+              <i class="ri-arrow-right-s-line"></i> Sports
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="filterByCategory('Entertainment');
+              return false;">
+              <i class="ri-arrow-right-s-line"></i> Entertainment
+            </a>
+          </li>
         </ul>
       </div>
 
@@ -195,7 +217,8 @@
         <ul class="footer-links">
           <li>
             <i class="ri-map-pin-line"></i>
-            Russian Federation Blvd, Phnom Penh, Cambodia
+            Russian Federation Blvd,
+            Phnom Penh, Cambodia
           </li>
           <li>
             <i class="ri-phone-line"></i>
@@ -226,16 +249,17 @@
     </div>
   </footer>
 
+  <!-- Scripts -->
   <script src="../JS/1_navbar.js"></script>
   <script src="../JS/2_events.js"></script>
   <script>
-  // Redirect to login if not logged in
-  document.addEventListener("DOMContentLoaded", () => {
-    const user = localStorage.getItem("erms_user");
-    if (!user) {
-      window.location.href = "../HTML/2_login.html";
-    }
-  });
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = localStorage.getItem("erms_user");
+      if (!user) {
+        window.location.href = "../HTML/2_login.html";
+      }
+    });
   </script>
+
 </body>
 </html>
