@@ -1,7 +1,3 @@
-Here are both — a complete **README.md** and a step‑by‑step **demo script** you can use for your submission or presentation.
-
----
-
 ## 📄 README.md (copy‑paste into your project root `README.md`)
 
 ```markdown
@@ -41,26 +37,6 @@ Built with **Django REST Framework** on the backend and vanilla HTML/CSS/JS on t
 - **django‑filter** (filtering)
 - **django‑cors‑headers**
 - **SQLite** (development database)
-
-## Project Structure
-
-```
-project/
-├── backend/
-│   ├── apps/
-│   │   ├── users/          # Custom user model, auth
-│   │   ├── events/         # Event CRUD, image upload
-│   │   └── registrations/  # Registration, payment, tickets, signals
-│   ├── config/             # Settings, URLs
-│   ├── manage.py
-│   └── db.sqlite3
-├── frontend/
-│   ├── HTML/
-│   ├── CSS/
-│   ├── JS/
-│   └── Images/
-└── README.md
-```
 
 ## Setup Instructions
 
@@ -204,7 +180,3 @@ python manage.py test
 - Show that all tests pass.
 
 **End of demo.**
-
----
-
-Both files are ready to be saved into your project. You can copy the README directly into `README.md`, and save the demo script as `DEMO.md` or just keep it as a guide. Your project is now submission‑ready – fantastic work! 😊🎉
