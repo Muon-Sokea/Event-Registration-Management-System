@@ -1,0 +1,260 @@
+/* ── Orange Hero Banner ── */
+.auth-hero {
+  background: #FDEBD0;
+  padding: 28px 40px;
+  border-bottom: 1px solid var(--primary-border);
+}
+.auth-hero h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+.auth-hero p {
+  font-size: 14px;
+  color: var(--text-medium);
+}
+
+/* ── Auth page wrapper ── */
+.auth-page {
+  min-height: calc(100vh - 180px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-light);
+  padding: 32px 16px;
+}
+
+/* ── Auth card ── */
+.auth-card {
+  background: var(--bg-white);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--border);
+  padding: 2rem 2.25rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Center logo badge ── */
+.auth-logo-center {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.auth-logo-badge {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #1B3A5C;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.1;
+}
+
+.auth-logo-badge .logo-top {
+  font-size: 9px;
+  font-weight: 700;
+  color: #ffffff;
+  font-style: italic;
+  font-family: Georgia, serif;
+}
+
+.auth-logo-badge .logo-bottom {
+  font-size: 11px;
+  font-weight: 800;
+  color: #ffffff;
+  font-style: italic;
+  font-family: Georgia, serif;
+}
+
+/* ── Title & subtitle ── */
+.auth-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-dark);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.auth-subtitle {
+  font-size: 14px;
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Input with icon ── */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon-left {
+  position: absolute;
+  left: 16px;
+  font-size: 16px;
+  color: #7a84a3;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 14px 16px 14px 44px;
+  border: 1px solid #d9dce3;
+  border-radius: 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 50px;
+  font-family: var(--font);
+  color: var(--text-dark);
+  background: #f8f9ff;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+.input-with-icon input:focus {
+  border-color: rgba(83, 110, 255, 0.75);
+  box-shadow: 0 0 0 4px rgba(83, 110, 255, 0.08);
+}
+.input-with-icon input.has-toggle { padding-right: 48px; }
+.input-with-icon input::placeholder { color: #8f97b8; }
+
+/* ── Toggle password ── */
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+/* ── Remember + forgot row ── */
+.auth-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.remember-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-medium);
+  cursor: pointer;
+}
+
+.forgot-link {
+  font-size: 13px;
+  color: var(--primary);
+  text-decoration: none;
+}
+.forgot-link:hover { text-decoration: underline; }
+
+/* ── Info box ── */
+.auth-info-box {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius);
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--text-medium);
+  margin-top: 14px;
+  line-height: 1.6;
+}
+
+/* ── Footer link ── */
+.auth-footer {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-medium);
+  margin-top: 1rem;
+}
+.auth-footer a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+.auth-footer a:hover { text-decoration: underline; }
+
+/* ── Name row ── */
+.name-row { display: flex; gap: 16px; }
+.name-row .form-group { flex: 1; min-width: 0; }
+
+@media (max-width: 740px) {
+  .name-row { flex-direction: column; gap: 12px; }
+}
+
+@media (max-width: 480px) {
+  .auth-card    { padding: 1.5rem; }
+  .auth-hero    { padding: 20px; }
+  .auth-hero h2 { font-size: 18px; }
+}
+
+/* ── Social divider ── */
+.social-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 16px;
+  color: var(--text-light);
+  font-size: 13px;
+}
+
+.social-divider::before,
+.social-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Social buttons ── */
+.social-btns {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.social-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 8px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--border-radius);
+  background: var(--bg-white);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font);
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s,
+              box-shadow 0.15s;
+}
+
+.social-btn:hover {
+  background: var(--bg-light);
+  border-color: #bbb;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Responsive ── */
+@media (max-width: 400px) {
+  .social-btns   { flex-direction: column; }
+  .social-btn    { width: 100%; }
+}
